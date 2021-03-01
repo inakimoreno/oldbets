@@ -1,5 +1,6 @@
 package dataAccess;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Vector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
@@ -18,7 +20,9 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Event;
 import domain.Question;
+import domain.User;
 import exceptions.QuestionAlreadyExist;
+import exceptions.UserAlreadyExists;
 
 /**
  * Implements the Data Access utility to the objectDb database
@@ -82,7 +86,7 @@ public class DataAccess  {
 			Event ev18 = new Event(18, "Girona-Leganés", UtilDate.newDate(year, month + 1, 28));
 			Event ev19 = new Event(19, "Real Sociedad-Levante", UtilDate.newDate(year, month + 1, 28));
 			Event ev20 = new Event(20, "Betis-Real Madrid", UtilDate.newDate(year, month + 1, 28));
-
+			/*
 			Question q1;
 			Question q2;
 			Question q3;
@@ -90,6 +94,7 @@ public class DataAccess  {
 			Question q5;
 			Question q6;
 
+			
 			if (Locale.getDefault().equals(new Locale("es"))) {
 				q1 = ev1.addQuestion("¿Quién ganará el partido?", 1);
 				q2 = ev1.addQuestion("¿Quién meterá el primer gol?", 2);
@@ -121,7 +126,7 @@ public class DataAccess  {
 			db.persist(q4);
 			db.persist(q5);
 			db.persist(q6);
-
+			 */
 			db.persist(ev1);
 			db.persist(ev2);
 			db.persist(ev3);
@@ -160,10 +165,10 @@ public class DataAccess  {
 	 * @return the created question, or null, or an exception
 	 * @throws QuestionAlreadyExist if the same question already exists for the event
 	 */
-	public Question createQuestion(Event event, String question, float betMinimum) 
+	public Question createQuestion(Event event, String question, float betMinimum, ArrayList<String> options) 
 			throws QuestionAlreadyExist {
 		System.out.println(">> DataAccess: createQuestion=> event = " + event + " question = " +
-				question + " minimum bet = " + betMinimum);
+				question + " minimum bet = " + betMinimum + "options="+options);
 
 		Event ev = db.find(Event.class, event.getEventNumber());
 
@@ -171,7 +176,7 @@ public class DataAccess  {
 				ResourceBundle.getBundle("Etiquetas").getString("ErrorQuestionAlreadyExist"));
 
 		db.getTransaction().begin();
-		Question q = ev.addQuestion(question, betMinimum);
+		Question q = ev.addQuestion(question, betMinimum, options);
 		//db.persist(q);
 		db.persist(ev); // db.persist(q) not required when CascadeType.PERSIST is added 
 		// in questions property of Event class
@@ -225,8 +230,8 @@ public class DataAccess  {
 		}
 		return res;
 	}
-
-
+	
+	
 	public void open(boolean initializeMode){
 
 		System.out.println("Opening DataAccess instance => isDatabaseLocal: " + 
@@ -260,6 +265,36 @@ public class DataAccess  {
 		return ev.doesQuestionExist(question);
 	}
 
+	
+	public void createUser(String username, String password) throws UserAlreadyExists{
+		//System.out.println(">> DataAccess: createQuestion=> event = " + event + " question = " +
+		//		question + " minimum bet = " + betMinimum + "options="+options);
+
+		User us = new User(username, password);
+
+		if (us.equals(getUser(username, password))) throw new UserAlreadyExists(
+				ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExists"));
+
+		db.getTransaction().begin();
+		db.persist(us);
+		db.getTransaction().commit();
+	}
+	
+	public User getUser(String username, String password){
+		User ret=null;
+		TypedQuery<User> us = db.createQuery("SELECT us FROM User us "
+				+ "WHERE us.username =\""+username+"\" AND us.password =\""+password+"\"", User.class);
+		try {
+		ret = us.getSingleResult();
+		}catch(NoResultException e) {
+			System.out.println("Username or password exception: "+e.getMessage());
+			return null;
+		}
+		
+		return ret;
+	}
+	
+	
 	public void close(){
 		db.close();
 		System.out.println("DataBase is closed");

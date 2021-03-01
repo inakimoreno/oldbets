@@ -1,5 +1,6 @@
 package businessLogic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
@@ -8,8 +9,10 @@ import javax.jws.WebService;
 
 import domain.Event;
 import domain.Question;
+import domain.User;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
+import exceptions.UserAlreadyExists;
 
 /**
  * Interface that specifies the business logic.
@@ -28,7 +31,7 @@ public interface BlFacade  {
  	 * @throws QuestionAlreadyExist if the same question already exists for the event
 	 */
 	@WebMethod
-	Question createQuestion(Event event, String question, float betMinimum) 
+	Question createQuestion(Event event, String question, float betMinimum, ArrayList<String> options) 
 			throws EventFinished, QuestionAlreadyExist;
 		
 	/**
@@ -46,4 +49,9 @@ public interface BlFacade  {
 	 * @return collection of dates
 	 */
 	@WebMethod public Vector<Date> getEventsMonth(Date date);
+	
+	
+	@WebMethod public void createUser(String username, String password) throws UserAlreadyExists;
+	
+	@WebMethod public User getUser(String username, String password);
 }

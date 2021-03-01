@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
@@ -89,8 +90,9 @@ public class Event implements Serializable {
 	 * @param betMinimum of that question
 	 * @return Bet
 	 */
-	public Question addQuestion(String question, float betMinimum)  {
-		Question q=new Question(question,betMinimum, this);
+	public Question addQuestion(String question, float betMinimum, ArrayList<String> options)  {
+		System.out.println(options);
+		Question q=new Question(question,betMinimum, this, options);
 		questions.add(q);
 		return q;
 	}

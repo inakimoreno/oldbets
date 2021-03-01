@@ -2,6 +2,8 @@ package domain;
 
 import java.io.*;
 
+import java.util.ArrayList;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -23,7 +25,8 @@ public class Question implements Serializable {
 
 	private String question; 
 	private float betMinimum;
-	private String result;  
+	private String result; 
+	private ArrayList<String> options = new ArrayList<String>();
 
 	@XmlIDREF
 	private Event event;
@@ -32,18 +35,20 @@ public class Question implements Serializable {
 		super();
 	}
 
-	public Question(Integer queryNumber, String query, float betMinimum, Event event) {
+	public Question(Integer queryNumber, String query, float betMinimum, Event event, ArrayList<String> options) {
 		super();
 		this.questionNumber = queryNumber;
 		this.question = query;
 		this.betMinimum=betMinimum;
 		this.event = event;
+		this.options.addAll(options);
 	}
 
-	public Question(String query, float betMinimum,  Event event) {
+	public Question(String query, float betMinimum,  Event event, ArrayList<String> options) {
 		super();
 		this.question = query;
 		this.betMinimum=betMinimum;
+		this.options.addAll(options);
 	}
 
 	/**
@@ -140,9 +145,17 @@ public class Question implements Serializable {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
-
+	
+	
+	public ArrayList<String> getOptions(){
+		return options;
+	}
+	
+	
+	
+	
 	@Override
 	public String toString(){
-		return questionNumber + ";" + question + ";" + Float.toString(betMinimum);
+		return questionNumber + ";" + question + ";" + Float.toString(betMinimum)+ options;
 	}	
 }

@@ -15,6 +15,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
+import javax.jdo.annotations.Queries;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,6 +28,9 @@ import com.toedter.calendar.JCalendar;
 import businessLogic.BlFacade;
 import configuration.UtilDate;
 import domain.Question;
+import exceptions.UserAlreadyExists;
+
+import javax.swing.JComboBox;
 
 public class BrowseQuestionsGUI extends JFrame {
 
@@ -92,7 +96,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("BrowseQuestions"));
 
 		eventDateLbl.setBounds(new Rectangle(40, 15, 140, 25));
-		questionLbl.setBounds(138, 248, 406, 14);
+		questionLbl.setBounds(23, 250, 406, 14);
 		eventLbl.setBounds(295, 19, 259, 16);
 
 		this.getContentPane().add(eventDateLbl, null);
@@ -185,7 +189,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		this.getContentPane().add(calendar, null);
 
 		eventScrollPane.setBounds(new Rectangle(292, 50, 346, 150));
-		questionScrollPane.setBounds(new Rectangle(138, 274, 406, 116));
+		questionScrollPane.setBounds(new Rectangle(23, 274, 406, 116));
 
 		eventTable.addMouseListener(new MouseAdapter() {
 			@Override
@@ -194,6 +198,10 @@ public class BrowseQuestionsGUI extends JFrame {
 				domain.Event ev = (domain.Event)eventTableModel.getValueAt(i,2); // obtain ev object
 				Vector<Question> queries = ev.getQuestions();
 
+				for(Question query:queries) {
+					System.out.println(query.getOptions());
+				}
+				
 				questionTableModel.setDataVector(null, questionColumnNames);
 
 				if (queries.isEmpty())
@@ -214,12 +222,50 @@ public class BrowseQuestionsGUI extends JFrame {
 			}
 		});
 
+		JLabel minBet = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice"));
+		minBet.setBounds(492, 250, 105, 14);
+		minBet.setVisible(false);
+		getContentPane().add(minBet);
+		
+		JComboBox<String> optionsComboBox = new JComboBox<String>();
+		optionsComboBox.setBounds(492, 275, 130, 20);
+		getContentPane().add(optionsComboBox);
+		
+		
 		eventScrollPane.setViewportView(eventTable);
 		eventTableModel = new DefaultTableModel(null, eventColumnNames);
 
 		eventTable.setModel(eventTableModel);
 		eventTable.getColumnModel().getColumn(0).setPreferredWidth(25);
 		eventTable.getColumnModel().getColumn(1).setPreferredWidth(268);
+		questionTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				optionsComboBox.removeAllItems();
+				int i = eventTable.getSelectedRow();
+				domain.Event ev = (domain.Event)eventTableModel.getValueAt(i,2); // obtain ev object
+				Vector<Question> queries = ev.getQuestions();
+				
+				for(Question query:queries) {
+					System.out.println(query.getOptions());
+				}
+				
+				int j = questionTable.getSelectedRow();
+				Question qu = queries.get(j);
+				
+				
+				for(String option:qu.getOptions()) {
+					optionsComboBox.addItem(option);
+				}
+				
+				
+				
+				minBet.setText(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice")+" "+qu.getBetMinimum());
+				minBet.setVisible(true);
+				System.out.println(qu.getEvent());
+				
+			}
+		});
 
 		questionScrollPane.setViewportView(questionTable);
 		questionTableModel = new DefaultTableModel(null, questionColumnNames);
@@ -230,6 +276,10 @@ public class BrowseQuestionsGUI extends JFrame {
 
 		this.getContentPane().add(eventScrollPane, null);
 		this.getContentPane().add(questionScrollPane, null);
+		
+		
+		
+		
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {

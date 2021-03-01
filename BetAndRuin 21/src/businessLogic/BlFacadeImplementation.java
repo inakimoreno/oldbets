@@ -1,5 +1,6 @@
 package businessLogic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -11,8 +12,10 @@ import configuration.ConfigXML;
 import dataAccess.DataAccess;
 import domain.Event;
 import domain.Question;
+import domain.User;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
+import exceptions.UserAlreadyExists;
 
 
 /**
@@ -56,7 +59,7 @@ public class BlFacadeImplementation implements BlFacade {
 	 */
 	@Override
 	@WebMethod
-	public Question createQuestion(Event event, String question, float betMinimum) 
+	public Question createQuestion(Event event, String question, float betMinimum, ArrayList<String> options) 
 			throws EventFinished, QuestionAlreadyExist {
 
 		//The minimum bid must be greater than 0
@@ -67,7 +70,7 @@ public class BlFacadeImplementation implements BlFacade {
 			throw new EventFinished(ResourceBundle.getBundle("Etiquetas").
 					getString("ErrorEventHasFinished"));
 
-		qry = dbManager.createQuestion(event, question, betMinimum);		
+		qry = dbManager.createQuestion(event, question, betMinimum, options);		
 		dbManager.close();
 		return qry;
 	}
@@ -83,7 +86,7 @@ public class BlFacadeImplementation implements BlFacade {
 	public Vector<Event> getEvents(Date date)  {
 		dbManager.open(false);
 		Vector<Event>  events = dbManager.getEvents(date);
-		dbManager.close();
+		//dbManager.close();
 		return events;
 	}
 
@@ -102,6 +105,21 @@ public class BlFacadeImplementation implements BlFacade {
 		dbManager.close();
 		return dates;
 	}
+	
+	public void createUser(String username, String password) throws UserAlreadyExists{
+		dbManager.open(false);
+		dbManager.createUser(username, password);		
+		dbManager.close();
+	}
+	
+	
+	public User getUser(String username, String password) {
+		dbManager.open(false);
+		User user = dbManager.getUser(username, password);
+		dbManager.close();
+		return user;
+	}
+	
 
 	public void close() {
 		dbManager.close();
