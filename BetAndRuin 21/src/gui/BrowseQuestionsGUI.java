@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Dimension;
+
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ import domain.Question;
 import exceptions.UserAlreadyExists;
 
 import javax.swing.JComboBox;
-
+import domain.User;
 public class BrowseQuestionsGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -74,12 +75,31 @@ public class BrowseQuestionsGUI extends JFrame {
 	};
 
 
+	private User currentUser;
+	private final JButton bettingButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("bettingButton"));
+	
+	JButton loginButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("loginButton")); 
+	
 	public void setBusinessLogic(BlFacade bl) {
 		businessLogic = bl;
 	}
 
 	public BrowseQuestionsGUI(BlFacade bl) {
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				
+				if(currentUser!=null) {
+					loginButton.setVisible(false);
+					if(questionTable.getSelectedRow()!=-1) {
+						bettingButton.setVisible(true);
+					}
+				}
+				
+			}
+		});
 		businessLogic = bl;
+		bettingButton.setVisible(false);
 		try {
 			jbInit();
 		}
@@ -95,6 +115,8 @@ public class BrowseQuestionsGUI extends JFrame {
 		this.setSize(new Dimension(700, 500));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("BrowseQuestions"));
 
+		
+		
 		eventDateLbl.setBounds(new Rectangle(40, 15, 140, 25));
 		questionLbl.setBounds(23, 250, 406, 14);
 		eventLbl.setBounds(295, 19, 259, 16);
@@ -221,7 +243,12 @@ public class BrowseQuestionsGUI extends JFrame {
 				questionTable.getColumnModel().getColumn(1).setPreferredWidth(268);
 			}
 		});
-
+		
+		
+		
+		BrowseQuestionsGUI browse = this;
+		
+		
 		JLabel minBet = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice"));
 		minBet.setBounds(492, 250, 105, 14);
 		minBet.setVisible(false);
@@ -257,13 +284,13 @@ public class BrowseQuestionsGUI extends JFrame {
 				for(String option:qu.getOptions()) {
 					optionsComboBox.addItem(option);
 				}
-				
-				
-				
+
 				minBet.setText(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice")+" "+qu.getBetMinimum());
 				minBet.setVisible(true);
 				System.out.println(qu.getEvent());
-				
+				if(currentUser!=null) {
+					bettingButton.setVisible(true);
+				}
 			}
 		});
 
@@ -278,10 +305,25 @@ public class BrowseQuestionsGUI extends JFrame {
 		this.getContentPane().add(questionScrollPane, null);
 		
 		
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Login_gui loginWindow = new Login_gui(businessLogic,browse);
+				loginWindow.setVisible(true);
+			}
+		});
+		loginButton.setBounds(74, 419, 112, 30);
+		getContentPane().add(loginButton);
+		bettingButton.setBounds(513, 367, 89, 23);
+		
+		getContentPane().add(bettingButton);	
 		
 		
 	}
 
+	public void setCurrentUser(User user) {
+		this.currentUser = user;
+	}
+	
 	private void jButton2_actionPerformed(ActionEvent e) {
 		this.setVisible(false);
 	}

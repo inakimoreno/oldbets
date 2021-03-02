@@ -27,6 +27,10 @@ public class User implements Serializable {
 	private String password;
 	private ArrayList<Bet> bets;
 	
+	public User() {
+		super();
+	}
+	
 	public User(String username, String password) {
 		super();
 		this.username = username;

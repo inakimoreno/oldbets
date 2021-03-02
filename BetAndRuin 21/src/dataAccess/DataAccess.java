@@ -267,17 +267,27 @@ public class DataAccess  {
 
 	
 	public void createUser(String username, String password) throws UserAlreadyExists{
-		//System.out.println(">> DataAccess: createQuestion=> event = " + event + " question = " +
-		//		question + " minimum bet = " + betMinimum + "options="+options);
 
 		User us = new User(username, password);
 
-		if (us.equals(getUser(username, password))) throw new UserAlreadyExists(
+		if (us.equals(getUser(username, password))||existsUser(username)) throw new UserAlreadyExists(
 				ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExists"));
 
 		db.getTransaction().begin();
 		db.persist(us);
 		db.getTransaction().commit();
+	}
+	
+	public boolean existsUser(String username) {
+		TypedQuery<User> us = db.createQuery("SELECT us FROM User us "
+				+ "WHERE us.username =\""+username+"\" ", User.class);
+		try {
+		us.getSingleResult();
+		}catch(NoResultException e) {
+			System.out.println("Username or password exception: "+e.getMessage());
+			return false;
+		}
+		return true;
 	}
 	
 	public User getUser(String username, String password){
