@@ -53,5 +53,11 @@ public interface BlFacade  {
 	
 	@WebMethod public void createUser(String username, String password) throws UserAlreadyExists;
 	
+	
 	@WebMethod public User getUser(String username, String password);
+	
+	
+	@WebMethod public void setCurrentUser(User currentUser);
+	
+	@WebMethod public User getCurrentUser();
 }

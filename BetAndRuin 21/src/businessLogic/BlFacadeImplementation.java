@@ -27,6 +27,8 @@ public class BlFacadeImplementation implements BlFacade {
 	DataAccess dbManager;
 	ConfigXML config = ConfigXML.getInstance();
 
+	private User currentUser;
+	
 	public BlFacadeImplementation()  {		
 		System.out.println("Creating BlFacadeImplementation instance");
 		boolean initialize = config.getDataBaseOpenMode().equals("initialize");
@@ -125,6 +127,14 @@ public class BlFacadeImplementation implements BlFacade {
 		dbManager.close();
 	}
 
+	public void setCurrentUser(User user) {
+		this.currentUser=user;
+	}
+	
+	public User getCurrentUser() {
+		return currentUser;
+	}
+	
 	/**
 	 * This method invokes the data access to initialize the database with some events and questions.
 	 * It is invoked only when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file

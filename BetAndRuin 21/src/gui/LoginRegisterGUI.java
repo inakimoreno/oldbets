@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,7 +20,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class Login_gui extends JFrame {
+@SuppressWarnings("serial")
+public class LoginRegisterGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField usernameInput;
@@ -32,30 +31,12 @@ public class Login_gui extends JFrame {
 	
 	JTextPane messagePane = new JTextPane();
 	private JButton registerButton;
-	private BrowseQuestionsGUI browseGUI;
-	/*
-	/**
-	 * Launch the application.
-	 /*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login_gui frame = new Login_gui(businessLogic);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
+
 	/**
 	 * Create the frame.
 	 */
-	public Login_gui(BlFacade businessLogic, BrowseQuestionsGUI browseGUI) {
+	public LoginRegisterGUI(BlFacade businessLogic) {
 		this.businessLogic = businessLogic;
-		this.browseGUI = browseGUI;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -80,10 +61,15 @@ public class Login_gui extends JFrame {
 		
 		registerButton = new JButton("Register");
 		registerButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				try {
-					businessLogic.createUser(usernameInput.getText(), passwordInput.getText());	
-					logIn();
+					if(!usernameInput.getText().equals("")&&!passwordInput.getText().equals("")) {
+						businessLogic.createUser(usernameInput.getText(), passwordInput.getText());	
+						logIn();
+					}else {
+						messagePane.setText("You must introduce a username and a password");
+					}
 				}catch(UserAlreadyExists a) {
 					messagePane.setText("Username already in use");
 				}
@@ -137,6 +123,7 @@ public class Login_gui extends JFrame {
 		this.setVisible(false);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void logIn(){
 		User user = new User();
 		user = businessLogic.getUser(usernameInput.getText(), passwordInput.getText());
@@ -144,7 +131,7 @@ public class Login_gui extends JFrame {
 			messagePane.setText("User or password are wrong");
 		}
 		else {
-			browseGUI.setCurrentUser(user);
+			businessLogic.setCurrentUser(user);
 			closeButton();
 		}
 	}

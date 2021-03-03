@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Dimension;
 
+
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +17,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import javax.jdo.annotations.Queries;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,10 +29,9 @@ import com.toedter.calendar.JCalendar;
 import businessLogic.BlFacade;
 import configuration.UtilDate;
 import domain.Question;
-import exceptions.UserAlreadyExists;
 
 import javax.swing.JComboBox;
-import domain.User;
+
 public class BrowseQuestionsGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -75,7 +74,6 @@ public class BrowseQuestionsGUI extends JFrame {
 	};
 
 
-	private User currentUser;
 	private final JButton bettingButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("bettingButton"));
 	
 	JButton loginButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("loginButton")); 
@@ -89,7 +87,7 @@ public class BrowseQuestionsGUI extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				
-				if(currentUser!=null) {
+				if(businessLogic.getCurrentUser()!=null) {
 					loginButton.setVisible(false);
 					if(questionTable.getSelectedRow()!=-1) {
 						bettingButton.setVisible(true);
@@ -246,9 +244,6 @@ public class BrowseQuestionsGUI extends JFrame {
 		
 		
 		
-		BrowseQuestionsGUI browse = this;
-		
-		
 		JLabel minBet = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice"));
 		minBet.setBounds(492, 250, 105, 14);
 		minBet.setVisible(false);
@@ -288,7 +283,7 @@ public class BrowseQuestionsGUI extends JFrame {
 				minBet.setText(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice")+" "+qu.getBetMinimum());
 				minBet.setVisible(true);
 				System.out.println(qu.getEvent());
-				if(currentUser!=null) {
+				if(businessLogic.getCurrentUser()!=null) {
 					bettingButton.setVisible(true);
 				}
 			}
@@ -307,7 +302,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Login_gui loginWindow = new Login_gui(businessLogic,browse);
+				LoginRegisterGUI loginWindow = new LoginRegisterGUI(businessLogic);
 				loginWindow.setVisible(true);
 			}
 		});
@@ -320,9 +315,6 @@ public class BrowseQuestionsGUI extends JFrame {
 		
 	}
 
-	public void setCurrentUser(User user) {
-		this.currentUser = user;
-	}
 	
 	private void jButton2_actionPerformed(ActionEvent e) {
 		this.setVisible(false);
