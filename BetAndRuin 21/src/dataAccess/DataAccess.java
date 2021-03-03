@@ -18,6 +18,7 @@ import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
+import domain.Bet;
 import domain.Event;
 import domain.Question;
 import domain.User;
@@ -304,6 +305,20 @@ public class DataAccess  {
 		return ret;
 	}
 	
+	public void addBetToUser(User us, Event ev, Question qu, String opt, int amount) {
+		Bet bet = new Bet(ev,qu,opt,amount,us.getUsername());
+		User user = getUser(us.getUsername(),us.getPassword());
+		storeBet(bet);
+		db.getTransaction().begin();
+		user.addBet(bet);
+		db.getTransaction().commit();	
+	}
+	
+	public void storeBet(Bet bet) {
+		db.getTransaction().begin();
+		db.persist(bet);
+		db.getTransaction().commit();
+	}
 	
 	public void close(){
 		db.close();

@@ -3,25 +3,24 @@ package domain;
 import java.io.*;
 
 
+
 import java.util.ArrayList;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class User implements Serializable {
+public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id 
-	@XmlJavaTypeAdapter(IntegerAdapter.class)
-	@GeneratedValue
-	private Integer userNumber;
-	
+	//@XmlJavaTypeAdapter(IntegerAdapter.class)
+
 	private String username;
 	private String password;
 	private ArrayList<Bet> bets;
@@ -34,14 +33,7 @@ public class User implements Serializable {
 		super();
 		this.username = username;
 		this.password = password;
-	}
-
-	public Integer getUserNumber() {
-		return userNumber;
-	}
-
-	public void setUserNumber(Integer userNumber) {
-		this.userNumber = userNumber;
+		bets = new ArrayList<Bet>();
 	}
 
 	public String getUsername() {

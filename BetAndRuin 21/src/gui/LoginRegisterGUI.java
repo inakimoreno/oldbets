@@ -31,12 +31,14 @@ public class LoginRegisterGUI extends JFrame {
 	
 	JTextPane messagePane = new JTextPane();
 	private JButton registerButton;
-
+	private BrowseQuestionsGUI browse;
+	
 	/**
 	 * Create the frame.
 	 */
-	public LoginRegisterGUI(BlFacade businessLogic) {
+	public LoginRegisterGUI(BlFacade businessLogic, BrowseQuestionsGUI browse) {
 		this.businessLogic = businessLogic;
+		this.browse = browse;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -132,6 +134,12 @@ public class LoginRegisterGUI extends JFrame {
 		}
 		else {
 			businessLogic.setCurrentUser(user);
+			browse.usernameLabel.setText(user.getUsername());
+			browse.loginButton.setVisible(false);
+			if(browse.questionTable.getSelectedRow()!=-1) {
+				browse.bettingButton.setVisible(true);
+				browse.betAmountField.setVisible(true);
+			}
 			closeButton();
 		}
 	}

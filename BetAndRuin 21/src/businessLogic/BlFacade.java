@@ -59,5 +59,11 @@ public interface BlFacade  {
 	
 	@WebMethod public void setCurrentUser(User currentUser);
 	
+	
 	@WebMethod public User getCurrentUser();
+	
+	
+	@WebMethod public boolean addBetToUser(Event ev, Question qu, String option, String amount);
+	
+	//@WebMethod public ArrayList<String> getQuestionOptions(Question qu);
 }

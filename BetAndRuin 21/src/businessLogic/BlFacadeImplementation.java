@@ -88,7 +88,7 @@ public class BlFacadeImplementation implements BlFacade {
 	public Vector<Event> getEvents(Date date)  {
 		dbManager.open(false);
 		Vector<Event>  events = dbManager.getEvents(date);
-		//dbManager.close();
+		dbManager.close();
 		return events;
 	}
 
@@ -121,7 +121,6 @@ public class BlFacadeImplementation implements BlFacade {
 		dbManager.close();
 		return user;
 	}
-	
 
 	public void close() {
 		dbManager.close();
@@ -134,6 +133,24 @@ public class BlFacadeImplementation implements BlFacade {
 	public User getCurrentUser() {
 		return currentUser;
 	}
+	
+	public boolean addBetToUser(Event ev, Question qu, String option, String amount) {
+		int intAmount;
+		try {
+		intAmount = Integer.parseInt(amount);
+		}catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		if(intAmount<qu.getBetMinimum()) {
+			return false;
+		}
+		dbManager.open(false);
+		dbManager.addBetToUser(currentUser, ev, qu, option, intAmount);
+		dbManager.close();
+		return true;
+	}
+	
 	
 	/**
 	 * This method invokes the data access to initialize the database with some events and questions.
