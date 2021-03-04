@@ -35,10 +35,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import java.awt.SystemColor;
 
 public class BrowseQuestionsGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
+	//private MainGUI maingui;
 
 	private BlFacade businessLogic;
 
@@ -82,19 +85,24 @@ public class BrowseQuestionsGUI extends JFrame {
 	
 	JButton loginButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("loginButton")); 
 	
-	JLabel usernameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("BrowseQuestionsGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
+	JLabel usernameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("usernameLabel")); //$NON-NLS-1$ //$NON-NLS-2$
 	
 	JComboBox<String> optionsComboBox = new JComboBox<String>();;
+	
+	JTextPane betMessagePane = new JTextPane();
 	
 	public void setBusinessLogic(BlFacade bl) {
 		businessLogic = bl;
 	}
 
-	public BrowseQuestionsGUI(BlFacade bl) {
+	public BrowseQuestionsGUI(BlFacade bl, MainGUI maingui) {
+		//this.maingui = maingui;
+		//this.maingui.setEnabled(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
 				businessLogic.setCurrentUser(null);
+				
 			}
 		});
 
@@ -113,7 +121,10 @@ public class BrowseQuestionsGUI extends JFrame {
 				int j = questionTable.getSelectedRow();
 				Question qu = queries.get(j);
 				
-				businessLogic.addBetToUser(ev,qu,optionsComboBox.getSelectedItem().toString(),betAmountField.getText());
+				if(!businessLogic.addBetToUser(ev,qu,optionsComboBox.getSelectedItem().toString(),betAmountField.getText())) 
+					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("invalidBetAmount"));
+				else 
+					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("successfulBet"));
 				
 			}
 		});
@@ -128,11 +139,11 @@ public class BrowseQuestionsGUI extends JFrame {
 
 	BrowseQuestionsGUI browse = this;
 	protected JTextField betAmountField;
-	private final JLabel betLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("betLabel")); //$NON-NLS-1$ //$NON-NLS-2$
+	protected final JLabel betLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("betLabel")); //$NON-NLS-1$ //$NON-NLS-2$
 	private void jbInit() throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(700, 500));
+		this.setSize(new Dimension(700, 525));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("BrowseQuestions"));
 
 		
@@ -145,13 +156,14 @@ public class BrowseQuestionsGUI extends JFrame {
 		this.getContentPane().add(questionLbl);
 		this.getContentPane().add(eventLbl);
 
-		closeBtn.setBounds(new Rectangle(274, 419, 130, 30));
+		closeBtn.setBounds(new Rectangle(273, 430, 130, 30));
 
 		closeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				jButton2_actionPerformed(e);
 				businessLogic.setCurrentUser(null);
+				//maingui.setEnabled(true);
 			}
 		});
 
@@ -270,6 +282,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		
 		
 		optionsComboBox.setBounds(492, 275, 130, 20);
+		optionsComboBox.setVisible(false);
 		getContentPane().add(optionsComboBox);
 		
 		
@@ -283,6 +296,11 @@ public class BrowseQuestionsGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				optionsComboBox.removeAllItems();
+				optionsComboBox.setVisible(true);
+				bettingButton.setVisible(true);
+				bettingButton.setEnabled(false);
+				betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("loginToBet"));
+				
 				int i = eventTable.getSelectedRow();
 				domain.Event ev = (domain.Event)eventTableModel.getValueAt(i,2); // obtain ev object
 				Vector<Question> queries = ev.getQuestions();
@@ -303,8 +321,10 @@ public class BrowseQuestionsGUI extends JFrame {
 				minBet.setVisible(true);
 				
 				if(businessLogic.getCurrentUser()!=null) {
-					bettingButton.setVisible(true);
+					bettingButton.setEnabled(true);
 					betAmountField.setVisible(true);
+					betLabel.setVisible(true);
+					betMessagePane.setText("");
 				}
 			}
 		});
@@ -326,9 +346,9 @@ public class BrowseQuestionsGUI extends JFrame {
 				loginWindow.setVisible(true);
 			}
 		});
-		loginButton.setBounds(74, 419, 112, 30);
+		loginButton.setBounds(74, 430, 130, 30);
 		getContentPane().add(loginButton);
-		bettingButton.setBounds(502, 419, 105, 30);
+		bettingButton.setBounds(492, 430, 130, 30);
 		
 		getContentPane().add(bettingButton);	
 		
@@ -338,17 +358,19 @@ public class BrowseQuestionsGUI extends JFrame {
 		
 		betAmountField = new JTextField();
 		betAmountField.setText(ResourceBundle.getBundle("Etiquetas").getString("betAmount")); //$NON-NLS-1$ //$NON-NLS-2$
-		betAmountField.setBounds(492, 356, 130, 20);
+		betAmountField.setBounds(492, 343, 130, 20);
 		getContentPane().add(betAmountField);
 		betAmountField.setVisible(false);
 		betAmountField.setColumns(10);
-		betLabel.setBounds(436, 359, 200, 14);
+		betLabel.setBounds(492, 318, 200, 14);
+		betLabel.setVisible(false);
 		
 		getContentPane().add(betLabel);
 		
-		JTextPane betMessagePane = new JTextPane();
-		//betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("")); //$NON-NLS-1$ //$NON-NLS-2$
-		betMessagePane.setBounds(464, 392, 186, 20);
+		
+		betMessagePane.setEditable(false);
+		betMessagePane.setBackground(SystemColor.menu);
+		betMessagePane.setBounds(450, 374, 200, 53);
 		getContentPane().add(betMessagePane);
 		
 		

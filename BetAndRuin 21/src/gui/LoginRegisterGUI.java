@@ -16,9 +16,13 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 
 @SuppressWarnings("serial")
 public class LoginRegisterGUI extends JFrame {
@@ -37,31 +41,38 @@ public class LoginRegisterGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginRegisterGUI(BlFacade businessLogic, BrowseQuestionsGUI browse) {
-		this.businessLogic = businessLogic;
+		/*addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				close();
+			}
+		});*/
 		this.browse = browse;
+		//this.browse.setEnabled(false);
+		this.businessLogic = businessLogic;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel usernameLabel = new JLabel("Username :");
+		JLabel usernameLoginLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("usernameLoginLabel"));
 		
 		usernameInput = new JTextField();
 		usernameInput.setColumns(10);
 		
-		JLabel passwordLabel = new JLabel("Password :");
+		JLabel passwordLoginLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("passwordLoginLabel"));
 		
 		passwordInput = new JPasswordField();
 		
-		JButton loginButton = new JButton("Login");
+		JButton loginButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("login"));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logIn();
 			}
 		});
 		
-		registerButton = new JButton("Register");
+		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("registerButton"));
 		registerButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -70,10 +81,10 @@ public class LoginRegisterGUI extends JFrame {
 						businessLogic.createUser(usernameInput.getText(), passwordInput.getText());	
 						logIn();
 					}else {
-						messagePane.setText("You must introduce a username and a password");
+						messagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("emptyFiledRegisterError"));
 					}
 				}catch(UserAlreadyExists a) {
-					messagePane.setText("Username already in use");
+					messagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("userInUse"));
 				}
 				
 			}
@@ -86,8 +97,8 @@ public class LoginRegisterGUI extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(29)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(passwordLabel)
-						.addComponent(usernameLabel))
+						.addComponent(passwordLoginLabel)
+						.addComponent(usernameLoginLabel))
 					.addGap(35)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -99,16 +110,17 @@ public class LoginRegisterGUI extends JFrame {
 						.addComponent(messagePane, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(88, Short.MAX_VALUE))
 		);
+		messagePane.setEditable(false);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(51)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(usernameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(usernameLabel))
+						.addComponent(usernameLoginLabel))
 					.addGap(40)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(passwordLabel)
+						.addComponent(passwordLoginLabel)
 						.addComponent(passwordInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addComponent(messagePane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -121,8 +133,9 @@ public class LoginRegisterGUI extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 	
-	private void closeButton() {
+	private void close() {
 		this.setVisible(false);
+		//this.browse.setEnabled(true);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -130,17 +143,19 @@ public class LoginRegisterGUI extends JFrame {
 		User user = new User();
 		user = businessLogic.getUser(usernameInput.getText(), passwordInput.getText());
 		if(user==null) {
-			messagePane.setText("User or password are wrong");
+			messagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("wrongLogin"));
 		}
 		else {
 			businessLogic.setCurrentUser(user);
 			browse.usernameLabel.setText(user.getUsername());
 			browse.loginButton.setVisible(false);
 			if(browse.questionTable.getSelectedRow()!=-1) {
-				browse.bettingButton.setVisible(true);
+				browse.bettingButton.setEnabled(true);
+				browse.betMessagePane.setText("");
 				browse.betAmountField.setVisible(true);
+				browse.betLabel.setVisible(true);
 			}
-			closeButton();
+			close();
 		}
 	}
 	

@@ -73,6 +73,7 @@ public class MainGUI extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	MainGUI maingui = this;
 	private void initializeMainPane() {
 		mainPane = new JPanel();
 		mainPane.setLayout(new GridLayout(4, 1, 0, 0));
@@ -92,13 +93,14 @@ public class MainGUI extends JFrame {
 	}
 
 	private void initializeBrowseQuestionsBtn() {
+		
 		browseQuestionsBtn = new JButton();
 		browseQuestionsBtn.setText(ResourceBundle.getBundle("Etiquetas").
 				getString("BrowseQuestions"));
 		browseQuestionsBtn.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic);
+				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, maingui);
 				findQuestionsWindow.setVisible(true);
 			}
 		});
