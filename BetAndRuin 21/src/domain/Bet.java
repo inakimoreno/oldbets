@@ -20,7 +20,7 @@ public class Bet implements Serializable{
 	private Event event;
 	private Question question;
 	private Option option;
-	private int bettedAmount;
+	private float bettedAmount;
 	private float possibleRevenue;
 	private boolean result;
 	
@@ -28,7 +28,7 @@ public class Bet implements Serializable{
 		super();
 	}
 	
-	public Bet(Event event, Question question, Option option, int bettedAmount, String username) {
+	public Bet(Event event, Question question, Option option, float bettedAmount, String username) {
 		super();
 		this.event = event;
 		this.question = question;
@@ -57,7 +57,7 @@ public class Bet implements Serializable{
 		return option;
 	}
 
-	public int getBettedAmount() {
+	public Float getBettedAmount() {
 		return bettedAmount;
 	}
 

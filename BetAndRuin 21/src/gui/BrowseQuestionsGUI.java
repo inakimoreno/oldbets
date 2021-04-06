@@ -1,8 +1,7 @@
 package gui;
 
 import java.awt.Dimension;
-
-
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,7 +67,8 @@ public class BrowseQuestionsGUI extends JFrame {
 
 	protected JTable eventTable= new JTable();
 	protected JTable questionTable = new JTable();
-
+ 
+	
 	private DefaultTableModel eventTableModel;
 	private DefaultTableModel questionTableModel;
 
@@ -80,8 +80,12 @@ public class BrowseQuestionsGUI extends JFrame {
 	private String[] questionColumnNames = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("QuestionN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Question")
-	};
-
+	};@Override
+	public Font getFont() {
+		// TODO Auto-generated method stub
+		return super.getFont();
+	}
+	
 
 	JButton bettingButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("bettingButton"));
 	
@@ -103,7 +107,6 @@ public class BrowseQuestionsGUI extends JFrame {
 				
 			}
 		});
-
 		businessLogic = bl;
 		bettingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -202,9 +205,9 @@ public class BrowseQuestionsGUI extends JFrame {
 
 					if (currentMonth != previousMonth) {
 						if (currentMonth == previousMonth + 2) {
-							// Si en JCalendar est√° 30 de enero y se avanza al mes siguiente, 
-							// devolver√≠a 2 de marzo (se toma como equivalente a 30 de febrero)
-							// Con este c√≥digo se dejar√° como 1 de febrero en el JCalendar
+							// Si en JCalendar est· 30 de enero y se avanza al mes siguiente, 
+							// devolverÌa 2 de marzo (se toma como equivalente a 30 de febrero)
+							// Con este cÛdigo se dejar· como 1 de febrero en el JCalendar
 							currentCalendar.set(Calendar.MONTH, previousMonth + 1);
 							currentCalendar.set(Calendar.DAY_OF_MONTH, 1);
 						}						
@@ -283,7 +286,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		
 		
 		JLabel minBet = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice"));
-		minBet.setBounds(492, 250, 105, 14);
+		minBet.setBounds(492, 226, 146, 14);
 		minBet.setVisible(false);
 		getContentPane().add(minBet);
 		
@@ -327,6 +330,8 @@ public class BrowseQuestionsGUI extends JFrame {
 				minBet.setText(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice")+" "+qu.getBetMinimum());
 				minBet.setVisible(true);
 				
+				//bettingOptionsLabel.setVisible(true);
+				
 				if(businessLogic.getCurrentUser()!=null) {
 					bettingButton.setEnabled(true);
 					betAmountField.setVisible(true);
@@ -369,6 +374,11 @@ public class BrowseQuestionsGUI extends JFrame {
 		betMessagePane.setBackground(SystemColor.menu);
 		betMessagePane.setBounds(450, 374, 200, 53);
 		getContentPane().add(betMessagePane);
+		
+		
+		//bettingOptionsLabel.setBounds(492, 250, 146, 14);
+		//bettingOptionsLabel.setVisible(false);
+		//getContentPane().add(bettingOptionsLabel);
 		
 		
 	}

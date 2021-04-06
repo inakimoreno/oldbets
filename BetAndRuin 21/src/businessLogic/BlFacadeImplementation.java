@@ -137,18 +137,18 @@ public class BlFacadeImplementation implements BlFacade {
 	}
 	
 	public boolean addBetToUser(Event ev, Question qu, Option option, String amount) {
-		int intAmount;
+		float floatAmount;
 		try {
-		intAmount = Integer.parseInt(amount);
+		floatAmount = Float.parseFloat(amount);
 		}catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			return false;
 		}
-		if(intAmount<qu.getBetMinimum()) {
+		if(floatAmount<qu.getBetMinimum()) {
 			return false;
 		}
 		dbManager.open(false);
-		dbManager.addBetToUser(currentUser, ev, qu, option, intAmount);
+		dbManager.addBetToUser(currentUser, ev, qu, option, floatAmount);
 		dbManager.close();
 		return true;
 	}

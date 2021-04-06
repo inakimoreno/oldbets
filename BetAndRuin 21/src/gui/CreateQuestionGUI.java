@@ -169,7 +169,7 @@ public class CreateQuestionGUI extends JFrame {
 		getContentPane().add(addOptionButton);
 		
 		JLabel returnRate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("returnRate"));
-		returnRate.setBounds(250, 276, 183, 14);
+		returnRate.setBounds(250, 276, 155, 14);
 		getContentPane().add(returnRate);
 		
 		returnRateTextField = new JTextField();
