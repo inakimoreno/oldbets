@@ -2,6 +2,7 @@ package gui;
 
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -20,12 +21,10 @@ import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 
 @SuppressWarnings("serial")
-public class LoginRegisterGUI extends JFrame {
+public class LoginGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField usernameInput;
@@ -35,20 +34,14 @@ public class LoginRegisterGUI extends JFrame {
 	
 	JTextPane messagePane = new JTextPane();
 	private JButton registerButton;
-	private BrowseQuestionsGUI browse;
+	private MainGUI mainGui;
 	
 	/**
 	 * Create the frame.
 	 */
-	public LoginRegisterGUI(BlFacade businessLogic, BrowseQuestionsGUI browse) {
-		/*addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				close();
-			}
-		});*/
-		this.browse = browse;
-		//this.browse.setEnabled(false);
+	public LoginGUI(BlFacade businessLogic, MainGUI mainGui/*, BrowseQuestionsGUI browse*/) {
+		//this.browse = browse;
+		this.mainGui = mainGui;
 		this.businessLogic = businessLogic;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -135,7 +128,6 @@ public class LoginRegisterGUI extends JFrame {
 	
 	private void close() {
 		this.setVisible(false);
-		//this.browse.setEnabled(true);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -147,14 +139,8 @@ public class LoginRegisterGUI extends JFrame {
 		}
 		else {
 			businessLogic.setCurrentUser(user);
-			browse.usernameLabel.setText(user.getUsername());
-			browse.loginButton.setVisible(false);
-			if(browse.questionTable.getSelectedRow()!=-1) {
-				browse.bettingButton.setEnabled(true);
-				browse.betMessagePane.setText("");
-				browse.betAmountField.setVisible(true);
-				browse.betLabel.setVisible(true);
-			}
+			mainGui.setCurrentUser(user);
+			mainGui.currentUserLabel.setText(user.getUsername());
 			close();
 		}
 	}

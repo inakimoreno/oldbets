@@ -8,6 +8,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import domain.Event;
+import domain.Option;
 import domain.Question;
 import domain.User;
 import exceptions.EventFinished;
@@ -31,7 +32,7 @@ public interface BlFacade  {
  	 * @throws QuestionAlreadyExist if the same question already exists for the event
 	 */
 	@WebMethod
-	Question createQuestion(Event event, String question, float betMinimum, ArrayList<String> options) 
+	Question createQuestion(Event event, String question, float betMinimum, ArrayList<Option> options) 
 			throws EventFinished, QuestionAlreadyExist;
 		
 	/**
@@ -63,7 +64,7 @@ public interface BlFacade  {
 	@WebMethod public User getCurrentUser();
 	
 	
-	@WebMethod public boolean addBetToUser(Event ev, Question qu, String option, String amount);
+	@WebMethod public boolean addBetToUser(Event ev, Question qu, Option option, String amount);
 	
 	//@WebMethod public ArrayList<String> getQuestionOptions(Question qu);
 }

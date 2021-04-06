@@ -19,33 +19,22 @@ public class Bet implements Serializable{
 	private Integer betNumber;
 	private Event event;
 	private Question question;
-	private String option;
+	private Option option;
 	private int bettedAmount;
-	private int possibleRevenue;
-	private int returnRate;
+	private float possibleRevenue;
 	private boolean result;
-	private String userName;
 	
 	public Bet() {
 		super();
 	}
 	
-	public Bet(Event event, Question question, String option, int bettedAmount, String username) {
+	public Bet(Event event, Question question, Option option, int bettedAmount, String username) {
 		super();
 		this.event = event;
 		this.question = question;
 		this.option = option;
 		this.bettedAmount = bettedAmount;
-		this.possibleRevenue = bettedAmount*returnRate;
-		this.userName = username;
-	}
-
-	public int getReturnRate() {
-		return returnRate;
-	}
-
-	public void setReturnRate(int returnRate) {
-		this.returnRate = returnRate;
+		this.possibleRevenue = bettedAmount*this.option.getReturnRate();
 	}
 
 	public boolean isResult() {
@@ -64,7 +53,7 @@ public class Bet implements Serializable{
 		return question;
 	}
 
-	public String getOption() {
+	public Option getOption() {
 		return option;
 	}
 
@@ -72,7 +61,7 @@ public class Bet implements Serializable{
 		return bettedAmount;
 	}
 
-	public int getPossibleRevenue() {
+	public float getPossibleRevenue() {
 		return possibleRevenue;
 	}
 	

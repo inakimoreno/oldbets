@@ -1,6 +1,7 @@
 package businessLogic;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -13,6 +14,7 @@ import dataAccess.DataAccess;
 import domain.Event;
 import domain.Question;
 import domain.User;
+import domain.Option;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
@@ -61,7 +63,7 @@ public class BlFacadeImplementation implements BlFacade {
 	 */
 	@Override
 	@WebMethod
-	public Question createQuestion(Event event, String question, float betMinimum, ArrayList<String> options) 
+	public Question createQuestion(Event event, String question, float betMinimum, ArrayList<Option> options) 
 			throws EventFinished, QuestionAlreadyExist {
 
 		//The minimum bid must be greater than 0
@@ -134,7 +136,7 @@ public class BlFacadeImplementation implements BlFacade {
 		return currentUser;
 	}
 	
-	public boolean addBetToUser(Event ev, Question qu, String option, String amount) {
+	public boolean addBetToUser(Event ev, Question qu, Option option, String amount) {
 		int intAmount;
 		try {
 		intAmount = Integer.parseInt(amount);

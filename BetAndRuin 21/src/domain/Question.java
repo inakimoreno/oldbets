@@ -26,7 +26,7 @@ public class Question implements Serializable {
 	private float betMinimum;
 	private String result; 
 	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	private ArrayList<String> options = new ArrayList<String>();
+	private ArrayList<Option> options = new ArrayList<Option>();
 
 	@XmlIDREF
 	private Event event;
@@ -35,7 +35,7 @@ public class Question implements Serializable {
 		super();
 	}
 
-	public Question(Integer queryNumber, String query, float betMinimum, Event event, ArrayList<String> options) {
+	public Question(Integer queryNumber, String query, float betMinimum, Event event, ArrayList<Option> options) {
 		super();
 		this.questionNumber = queryNumber;
 		this.question = query;
@@ -44,7 +44,7 @@ public class Question implements Serializable {
 		this.options.addAll(options);
 	}
 
-	public Question(String query, float betMinimum,  Event event, ArrayList<String> options) {
+	public Question(String query, float betMinimum,  Event event, ArrayList<Option> options) {
 		super();
 		this.question = query;
 		this.betMinimum=betMinimum;
@@ -147,7 +147,7 @@ public class Question implements Serializable {
 	}
 	
 	
-	public ArrayList<String> getOptions(){
+	public ArrayList<Option> getOptions(){
 		return options;
 	}
 	

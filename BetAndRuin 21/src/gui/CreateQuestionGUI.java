@@ -29,6 +29,7 @@ import com.toedter.calendar.JCalendar;
 import businessLogic.BlFacade;
 import configuration.UtilDate;
 import domain.Event;
+import domain.Option;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 
@@ -67,7 +68,8 @@ public class CreateQuestionGUI extends JFrame {
 	private JTextField optionTextField;
 
 	
-	private ArrayList<String> options = new ArrayList<>();
+	private ArrayList<Option> options = new ArrayList<>();
+	private JTextField returnRateTextField;
 	
 	public void setBusinessLogic(BlFacade bl) {
 		businessLogic = bl;		
@@ -99,7 +101,7 @@ public class CreateQuestionGUI extends JFrame {
 		calendar.setBounds(new Rectangle(40, 50, 225, 150));
 		eventScrollPane.setBounds(new Rectangle(25, 44, 346, 116));
 
-		createBtn.setBounds(new Rectangle(100, 318, 130, 30));
+		createBtn.setBounds(new Rectangle(100, 335, 130, 30));
 		createBtn.setEnabled(false);
 
 		createBtn.addActionListener(new ActionListener() {
@@ -108,7 +110,7 @@ public class CreateQuestionGUI extends JFrame {
 				jButtonCreate_actionPerformed(e);
 			}
 		});
-		closeBtn.setBounds(new Rectangle(275, 318, 130, 30));
+		closeBtn.setBounds(new Rectangle(275, 335, 130, 30));
 		closeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -118,7 +120,6 @@ public class CreateQuestionGUI extends JFrame {
 
 		msgLbl.setBounds(new Rectangle(275, 182, 305, 20));
 		msgLbl.setForeground(Color.red);
-		// jLabelMsg.setSize(new Dimension(305, 20));
 
 		errorLbl.setBounds(new Rectangle(100, 287, 305, 20));
 		errorLbl.setForeground(Color.red);
@@ -145,7 +146,7 @@ public class CreateQuestionGUI extends JFrame {
 		eventDateLbl.setBounds(40, 16, 140, 25);
 		getContentPane().add(eventDateLbl);
 		
-		JLabel optionsLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateQuestionGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		JLabel optionsLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("option"));
 		optionsLabel.setBounds(250, 246, 46, 14);
 		getContentPane().add(optionsLabel);
 		
@@ -154,16 +155,28 @@ public class CreateQuestionGUI extends JFrame {
 		optionTextField.setBounds(306, 243, 223, 20);
 		getContentPane().add(optionTextField);
 		
-		JButton addOptionButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CreateQuestionGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		JButton addOptionButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("addOption"));
 		addOptionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				/////////////////////////////////////
-				options.add(optionTextField.getText());
+				Option opt = new Option(optionTextField.getText(), Float.parseFloat(returnRateTextField.getText()));
+				options.add(opt);
 				optionTextField.setText("");
+				returnRateTextField.setText("");
 			}
 		});
-		addOptionButton.setBounds(368, 274, 89, 23);
+		addOptionButton.setBounds(368, 301, 117, 23);
 		getContentPane().add(addOptionButton);
+		
+		JLabel returnRate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("returnRate"));
+		returnRate.setBounds(250, 276, 183, 14);
+		getContentPane().add(returnRate);
+		
+		returnRateTextField = new JTextField();
+		//returnRateTextField.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuestionGUI.textField.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		returnRateTextField.setBounds(443, 274, 86, 20);
+		getContentPane().add(returnRateTextField);
+		returnRateTextField.setColumns(10);
 
 
 		// Code for JCalendar

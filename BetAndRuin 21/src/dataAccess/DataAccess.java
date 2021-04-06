@@ -20,6 +20,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Bet;
 import domain.Event;
+import domain.Option;
 import domain.Question;
 import domain.User;
 import exceptions.QuestionAlreadyExist;
@@ -166,7 +167,7 @@ public class DataAccess  {
 	 * @return the created question, or null, or an exception
 	 * @throws QuestionAlreadyExist if the same question already exists for the event
 	 */
-	public Question createQuestion(Event event, String question, float betMinimum, ArrayList<String> options) 
+	public Question createQuestion(Event event, String question, float betMinimum, ArrayList<Option> options) 
 			throws QuestionAlreadyExist {
 		System.out.println(">> DataAccess: createQuestion=> event = " + event + " question = " +
 				question + " minimum bet = " + betMinimum + "options="+options);
@@ -178,8 +179,7 @@ public class DataAccess  {
 
 		db.getTransaction().begin();
 		Question q = ev.addQuestion(question, betMinimum, options);
-		//db.persist(q);
-		db.persist(ev); // db.persist(q) not required when CascadeType.PERSIST is added 
+		db.persist(ev);
 		// in questions property of Event class
 		// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 		db.getTransaction().commit();
@@ -305,7 +305,7 @@ public class DataAccess  {
 		return ret;
 	}
 	
-	public void addBetToUser(User us, Event ev, Question qu, String opt, int amount) {
+	public void addBetToUser(User us, Event ev, Question qu, Option opt, int amount) {
 		Bet bet = new Bet(ev,qu,opt,amount,us.getUsername());
 		User user = getUser(us.getUsername(),us.getPassword());
 		storeBet(bet);

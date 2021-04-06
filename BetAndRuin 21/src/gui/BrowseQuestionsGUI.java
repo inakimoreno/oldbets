@@ -28,7 +28,9 @@ import com.toedter.calendar.JCalendar;
 
 import businessLogic.BlFacade;
 import configuration.UtilDate;
+import domain.Option;
 import domain.Question;
+import domain.User;
 
 import javax.swing.JComboBox;
 import java.awt.event.WindowAdapter;
@@ -83,9 +85,7 @@ public class BrowseQuestionsGUI extends JFrame {
 
 	JButton bettingButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("bettingButton"));
 	
-	JButton loginButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("loginButton")); 
-	
-	JLabel usernameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("usernameLabel")); //$NON-NLS-1$ //$NON-NLS-2$
+	JLabel usernameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("usernameLabel"));
 	
 	JComboBox<String> optionsComboBox = new JComboBox<String>();;
 	
@@ -95,9 +95,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		businessLogic = bl;
 	}
 
-	public BrowseQuestionsGUI(BlFacade bl, MainGUI maingui) {
-		//this.maingui = maingui;
-		//this.maingui.setEnabled(false);
+	public BrowseQuestionsGUI(BlFacade bl, User currentUser) {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -121,7 +119,15 @@ public class BrowseQuestionsGUI extends JFrame {
 				int j = questionTable.getSelectedRow();
 				Question qu = queries.get(j);
 				
-				if(!businessLogic.addBetToUser(ev,qu,optionsComboBox.getSelectedItem().toString(),betAmountField.getText())) 
+				Option option = null;
+				
+				for(Option opt:qu.getOptions()) {
+					if(opt.getName().equals(optionsComboBox.getSelectedItem().toString())) {
+						option = opt;
+					}
+				}
+				
+				if(!businessLogic.addBetToUser(ev,qu,option,betAmountField.getText())) 
 					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("invalidBetAmount"));
 				else 
 					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("successfulBet"));
@@ -129,6 +135,9 @@ public class BrowseQuestionsGUI extends JFrame {
 			}
 		});
 		bettingButton.setVisible(false);
+		if(currentUser!=null) {
+			usernameLabel.setText(currentUser.getUsername());
+		}
 		try {
 			jbInit();
 		}
@@ -163,7 +172,6 @@ public class BrowseQuestionsGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				jButton2_actionPerformed(e);
 				businessLogic.setCurrentUser(null);
-				//maingui.setEnabled(true);
 			}
 		});
 
@@ -226,7 +234,6 @@ public class BrowseQuestionsGUI extends JFrame {
 							row.add(ev.getEventNumber());
 							row.add(ev.getDescription());
 							row.add(ev); 	// ev object added in order to obtain it with 
-							// tableModelEvents.getValueAt(i,2)
 							eventTableModel.addRow(row);		
 						}
 						eventTable.getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -313,8 +320,8 @@ public class BrowseQuestionsGUI extends JFrame {
 				Question qu = queries.get(j);
 				
 				
-				for(String option:qu.getOptions()) {
-					optionsComboBox.addItem(option);
+				for(Option option:qu.getOptions()) {
+					optionsComboBox.addItem(option.getName());
 				}
 
 				minBet.setText(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice")+" "+qu.getBetMinimum());
@@ -338,16 +345,6 @@ public class BrowseQuestionsGUI extends JFrame {
 
 		this.getContentPane().add(eventScrollPane, null);
 		this.getContentPane().add(questionScrollPane, null);
-		
-		
-		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				LoginRegisterGUI loginWindow = new LoginRegisterGUI(businessLogic, browse);
-				loginWindow.setVisible(true);
-			}
-		});
-		loginButton.setBounds(74, 430, 130, 30);
-		getContentPane().add(loginButton);
 		bettingButton.setBounds(492, 430, 130, 30);
 		
 		getContentPane().add(bettingButton);	
