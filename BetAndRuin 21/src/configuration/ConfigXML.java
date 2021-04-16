@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 
 /**
- * Provides the configuration data from the resources/config.xml file
+ * Provides the configuration data from the resources/config.xml archive
  */
 public class ConfigXML {
 
