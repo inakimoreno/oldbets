@@ -66,7 +66,7 @@ public class BlFacadeImplementation implements BlFacade {
 	public Question createQuestion(Event event, String question, float betMinimum, ArrayList<Option> options) 
 			throws EventFinished, QuestionAlreadyExist {
 
-		//The minimum bid must be greater than 0
+		//The minimum bid must be greater than zero
 		dbManager.open(false);
 		Question qry = null;
 
