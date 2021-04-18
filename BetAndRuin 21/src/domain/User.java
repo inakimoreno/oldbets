@@ -24,18 +24,25 @@ public class User implements Serializable{
 	private String username;
 	private String password;
 	private ArrayList<Bet> bets;
+	private boolean isadmin;
 	
 	public User() {
 		super();
 	}
 	
-	public User(String username, String password) {
+	public User(String username, String password, boolean isadmin) {
 		super();
 		this.username = username;
 		this.password = password;
 		bets = new ArrayList<Bet>();
+		this.isadmin = isadmin;
+	
 	}
 
+	public boolean isadmin () {
+		return this.isadmin;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

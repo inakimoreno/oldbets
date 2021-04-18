@@ -15,6 +15,7 @@ import domain.Event;
 import domain.Question;
 import domain.User;
 import domain.Option;
+import domain.Bet;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
@@ -29,7 +30,7 @@ public class BlFacadeImplementation implements BlFacade {
 	DataAccess dbManager;
 	ConfigXML config = ConfigXML.getInstance();
 
-	private User currentUser;
+	private User currentUser=null;
 	
 	public BlFacadeImplementation()  {		
 		System.out.println("Creating BlFacadeImplementation instance");
@@ -151,6 +152,15 @@ public class BlFacadeImplementation implements BlFacade {
 		dbManager.addBetToUser(currentUser, ev, qu, option, floatAmount);
 		dbManager.close();
 		return true;
+	}
+	
+	public ArrayList<Bet> getBets(){
+		ArrayList<Bet> bets = new ArrayList<Bet>();
+		dbManager.open(false);
+		User usr = dbManager.getUser(this.currentUser.getUsername(), this.currentUser.getPassword());
+		bets = (ArrayList<Bet>) usr.getBets().clone();
+		dbManager.close();
+		return bets;
 	}
 	
 	

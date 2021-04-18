@@ -21,6 +21,7 @@ public class ApplicationLauncher {
 		Locale.setDefault(new Locale(config.getLocale()));
 		System.out.println("Locale: " + Locale.getDefault());
 		MainGUI initWindow = new MainGUI();
+		
 		BlFacade businessLogic;
 
 		try {
@@ -46,7 +47,8 @@ public class ApplicationLauncher {
 				QName qname = new QName("http://businessLogic/", "BlFacadeImplementationService");
 				Service service = Service.create(url, qname);
 				businessLogic = service.getPort(BlFacade.class);
-			} 
+			}
+			//initWindow = new MainGUI(businessLogic);
 			initWindow.setBussinessLogic(businessLogic);
 			initWindow.setVisible(true);
 		}

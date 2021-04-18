@@ -33,7 +33,7 @@ public class MainGUI extends JFrame {
 	private JPanel mainPane;
 	protected JLabel selectOptionLbl;
 	private JButton browseQuestionsBtn;
-	private JButton createQuestionBtn;
+	JButton createQuestionBtn;
 	private JPanel localePane;
 	private JRadioButton euskaraRbtn;
 	private JRadioButton castellanoRbtn;
@@ -42,7 +42,6 @@ public class MainGUI extends JFrame {
 	public JLabel currentUserLabel;
 	
 	
-	private User currentUser;
 	private BlFacade businessLogic;
 
 	public BlFacade getBusinessLogic(){
@@ -56,7 +55,7 @@ public class MainGUI extends JFrame {
 
 	public MainGUI() {
 		super();
-
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -130,7 +129,7 @@ public class MainGUI extends JFrame {
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 		//this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
+			}
 
 	MainGUI maingui = this;
 	private JButton registerButton;
@@ -147,9 +146,6 @@ public class MainGUI extends JFrame {
 		initializeLocalePane();
 	}
 
-	public void setCurrentUser(User user) {
-		this.currentUser=user;
-	}
 	
 	private void initializeBrowseQuestionsBtn() {
 		
@@ -159,7 +155,7 @@ public class MainGUI extends JFrame {
 		browseQuestionsBtn.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, currentUser);
+				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, businessLogic.getCurrentUser());
 				findQuestionsWindow.setVisible(true);
 			}
 		});
@@ -167,6 +163,8 @@ public class MainGUI extends JFrame {
 
 	private void initializeCreateQuestionBtn() {
 		createQuestionBtn = new JButton();
+		createQuestionBtn.setVisible(false);
+		
 		createQuestionBtn.setText(ResourceBundle.getBundle("Etiquetas").
 				getString("CreateQuestion"));
 		createQuestionBtn.addActionListener(new java.awt.event.ActionListener() {

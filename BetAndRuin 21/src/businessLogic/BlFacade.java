@@ -7,6 +7,7 @@ import java.util.Vector;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import domain.Bet;
 import domain.Event;
 import domain.Option;
 import domain.Question;
@@ -65,6 +66,8 @@ public interface BlFacade  {
 	
 	
 	@WebMethod public boolean addBetToUser(Event ev, Question qu, Option option, String amount);
+	
+	@WebMethod public ArrayList<Bet> getBets();
 	
 	//@WebMethod public ArrayList<String> getQuestionOptions(Question qu);
 }
