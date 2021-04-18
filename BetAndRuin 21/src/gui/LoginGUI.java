@@ -140,6 +140,8 @@ public class LoginGUI extends JFrame {
 		else {
 			businessLogic.setCurrentUser(user);
 			mainGui.setCurrentUser(user);
+			if(user.isAdmin())
+				mainGui.createQuestionBtn.setVisible(true);
 			mainGui.currentUserLabel.setText(user.getUsername());
 			close();
 		}

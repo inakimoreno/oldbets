@@ -33,7 +33,7 @@ public class MainGUI extends JFrame {
 	private JPanel mainPane;
 	protected JLabel selectOptionLbl;
 	private JButton browseQuestionsBtn;
-	private JButton createQuestionBtn;
+	JButton createQuestionBtn;
 	private JPanel localePane;
 	private JRadioButton euskaraRbtn;
 	private JRadioButton castellanoRbtn;
@@ -167,6 +167,7 @@ public class MainGUI extends JFrame {
 
 	private void initializeCreateQuestionBtn() {
 		createQuestionBtn = new JButton();
+		createQuestionBtn.setVisible(false);
 		createQuestionBtn.setText(ResourceBundle.getBundle("Etiquetas").
 				getString("CreateQuestion"));
 		createQuestionBtn.addActionListener(new java.awt.event.ActionListener() {

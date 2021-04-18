@@ -276,7 +276,7 @@ public class DataAccess  {
 	
 	public void createUser(String username, String password) throws UserAlreadyExists{
 
-		User us = new User(username, password);
+		User us = new User(username, password, false);
 
 		if (us.equals(getUser(username, password))||existsUser(username)) throw new UserAlreadyExists(
 				ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExists"));
