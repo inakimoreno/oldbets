@@ -1,5 +1,6 @@
 ------------------------------------------------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 [2021-04-19 21:53:57 #1 store] 
 Database '/Users/Louis/git/Bets_repo/BetAndRuin 21/bets.temp' is opened by 81626@Louiss-MacBook-Pro-2.local
 
@@ -82,4 +83,118 @@ Type domain.Question is not enhanced.
 
 [2021-04-19 22:00:27 #5 type] 
 Type domain.Option is not enhanced.
+=======
+[2021-04-19 16:28:52 #1 store] 
+Database 'C:\Users\aitor\git\Bets_repo\BetAndRuin 21\bets.temp' is opened by 6104@LAPTOP-FHVG44NB
+
+[2021-04-19 16:28:52 #2 store] 
+Configuration path: ?
+
+[2021-04-19 16:28:53 #3 type] 
+Type domain.Event is not enhanced.
+
+[2021-04-19 16:28:53 #4 type] 
+Type domain.Question is not enhanced.
+
+[2021-04-19 16:28:53 #5 type] 
+Type domain.Option is not enhanced.
+
+[2021-04-19 16:28:53 #6 type] 
+Type domain.User is not enhanced.
+
+[2021-04-19 16:28:53 #7 type] 
+Type domain.Bet is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2021-04-19 16:30:06 #1 store] 
+Database 'C:\Users\aitor\git\Bets_repo\BetAndRuin 21\bets.temp' is opened by 1292@LAPTOP-FHVG44NB
+
+[2021-04-19 16:30:06 #2 store] 
+Configuration path: ?
+
+[2021-04-19 16:30:06 #3 type] 
+Type domain.Event is not enhanced.
+
+[2021-04-19 16:30:06 #4 type] 
+Type domain.Question is not enhanced.
+
+[2021-04-19 16:30:06 #5 type] 
+Type domain.Option is not enhanced.
+
+[2021-04-19 16:30:06 #6 type] 
+Type domain.User is not enhanced.
+
+[2021-04-19 16:30:06 #7 type] 
+Type domain.Bet is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2021-04-19 16:30:35 #1 store] 
+Database 'C:\Users\aitor\git\Bets_repo\BetAndRuin 21\bets.temp' is opened by 2620@LAPTOP-FHVG44NB
+
+[2021-04-19 16:30:35 #2 store] 
+Configuration path: ?
+
+[2021-04-19 16:30:35 #3 type] 
+Type domain.Event is not enhanced.
+
+[2021-04-19 16:30:35 #4 type] 
+Type domain.Question is not enhanced.
+
+[2021-04-19 16:30:35 #5 type] 
+Type domain.Option is not enhanced.
+
+[2021-04-19 16:30:35 #6 type] 
+Type domain.User is not enhanced.
+
+[2021-04-19 16:30:35 #7 type] 
+Type domain.Bet is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2021-04-19 16:32:05 #1 store] 
+Database 'C:\Users\aitor\git\Bets_repo\BetAndRuin 21\bets.temp' is opened by 15536@LAPTOP-FHVG44NB
+
+[2021-04-19 16:32:05 #2 store] 
+Configuration path: ?
+
+[2021-04-19 16:32:05 #3 type] 
+Type domain.Event is not enhanced.
+
+[2021-04-19 16:32:05 #4 type] 
+Type domain.Question is not enhanced.
+
+[2021-04-19 16:32:05 #5 type] 
+Type domain.Option is not enhanced.
+
+[2021-04-19 16:32:05 #6 type] 
+Type domain.User is not enhanced.
+
+[2021-04-19 16:32:05 #7 type] 
+Type domain.Bet is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2021-04-19 16:36:45 #1 store] 
+Database 'C:\Users\aitor\git\Bets_repo\BetAndRuin 21\bets.temp' is opened by 2484@LAPTOP-FHVG44NB
+
+[2021-04-19 16:36:45 #2 store] 
+Configuration path: ?
+
+[2021-04-19 16:36:45 #3 type] 
+Type domain.Event is not enhanced.
+
+[2021-04-19 16:36:45 #4 type] 
+Type domain.Question is not enhanced.
+
+[2021-04-19 16:36:45 #5 type] 
+Type domain.Option is not enhanced.
+
+[2021-04-19 16:36:45 #6 type] 
+Type domain.User is not enhanced.
+
+[2021-04-19 16:36:45 #7 type] 
+Type domain.Bet is not enhanced.
+>>>>>>> branch 'master' of https://xp-dev.com/git/Bets_repo
 

@@ -91,6 +91,8 @@ public class BrowseQuestionsGUI extends JFrame {
 	
 	JLabel usernameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("usernameLabel"));
 	
+	JButton profileButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("myProfile")); //$NON-NLS-1$ //$NON-NLS-2$
+	
 	JComboBox<String> optionsComboBox = new JComboBox<String>();;
 	
 	JTextPane betMessagePane = new JTextPane();
@@ -162,7 +164,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		
 		eventDateLbl.setBounds(new Rectangle(40, 15, 140, 25));
 		questionLbl.setBounds(23, 250, 406, 14);
-		eventLbl.setBounds(295, 19, 259, 16);
+		eventLbl.setBounds(293, 19, 53, 16);
 
 		this.getContentPane().add(eventDateLbl, null);
 		this.getContentPane().add(questionLbl);
@@ -205,9 +207,9 @@ public class BrowseQuestionsGUI extends JFrame {
 
 					if (currentMonth != previousMonth) {
 						if (currentMonth == previousMonth + 2) {
-							// Si en JCalendar está 30 de enero y se avanza al mes siguiente, 
-							// devolvería 2 de marzo (se toma como equivalente a 30 de febrero)
-							// Con este código se dejará como 1 de febrero en el JCalendar
+							// Si en JCalendar estï¿½ 30 de enero y se avanza al mes siguiente, 
+							// devolverï¿½a 2 de marzo (se toma como equivalente a 30 de febrero)
+							// Con este cï¿½digo se dejarï¿½ como 1 de febrero en el JCalendar
 							currentCalendar.set(Calendar.MONTH, previousMonth + 1);
 							currentCalendar.set(Calendar.DAY_OF_MONTH, 1);
 						}						
@@ -355,7 +357,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		getContentPane().add(bettingButton);	
 		
 		
-		usernameLabel.setBounds(513, 20, 149, 14);
+		usernameLabel.setBounds(450, 20, 89, 14);
 		getContentPane().add(usernameLabel);
 		
 		betAmountField = new JTextField();
@@ -374,6 +376,19 @@ public class BrowseQuestionsGUI extends JFrame {
 		betMessagePane.setBackground(SystemColor.menu);
 		betMessagePane.setBounds(450, 374, 200, 53);
 		getContentPane().add(betMessagePane);
+		profileButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ProfileGUI profile = new ProfileGUI(businessLogic);
+				profile.setVisible(true);
+			}
+		});
+		
+		
+		profileButton.setBounds(519, 16, 119, 23);
+		profileButton.setVisible(false);
+		if(businessLogic.getCurrentUser()!=null)
+			profileButton.setVisible(true);
+		getContentPane().add(profileButton);
 		
 		
 		//bettingOptionsLabel.setBounds(492, 250, 146, 14);
