@@ -31,6 +31,8 @@ public class ProfileGUI extends JFrame {
 	private JPanel contentPane;
 	private JTable betsTable;
 	
+	private DefaultTableModel betsTableModel;
+	
 	private BlFacade businessLogic;
 
 	/**
@@ -103,17 +105,18 @@ public class ProfileGUI extends JFrame {
 		);
 		
 		betsTable = new JTable();
-		betsTable.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-					ResourceBundle.getBundle("Etiquetas").getString("Event"),
-					ResourceBundle.getBundle("Etiquetas").getString("Question"),
-					ResourceBundle.getBundle("Etiquetas").getString("option"),
-					ResourceBundle.getBundle("Etiquetas").getString("Betted"),
-					ResourceBundle.getBundle("Etiquetas").getString("Revenue")
-			}
-		));
+		betsTableModel = new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+						ResourceBundle.getBundle("Etiquetas").getString("Event"),
+						ResourceBundle.getBundle("Etiquetas").getString("Question"),
+						ResourceBundle.getBundle("Etiquetas").getString("option"),
+						ResourceBundle.getBundle("Etiquetas").getString("Betted"),
+						ResourceBundle.getBundle("Etiquetas").getString("Revenue")
+				}
+			); 
+		betsTable.setModel(betsTableModel);
 		betsTable.getColumnModel().getColumn(0).setPreferredWidth(203);
 		betsTable.getColumnModel().getColumn(1).setPreferredWidth(204);
 		betsTable.getColumnModel().getColumn(2).setPreferredWidth(121);
@@ -130,7 +133,8 @@ public class ProfileGUI extends JFrame {
 			bet.add(b.getOption().getName());
 			bet.add(b.getBettedAmount());
 			bet.add(b.getPossibleRevenue());
-			
+			betsTableModel.addRow(bet);
+			System.out.println(bet);
 			
 		}
 	}
