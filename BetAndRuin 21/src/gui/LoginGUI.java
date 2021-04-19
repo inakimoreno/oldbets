@@ -142,6 +142,8 @@ public class LoginGUI extends JFrame {
 			mainGui.setCurrentUser(user);
 			if(user.isAdmin())
 				mainGui.createQuestionBtn.setVisible(true);
+			else
+				mainGui.createQuestionBtn.setVisible(false);
 			mainGui.currentUserLabel.setText(user.getUsername());
 			close();
 		}
