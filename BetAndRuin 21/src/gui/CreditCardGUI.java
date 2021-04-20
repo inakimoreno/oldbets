@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import businessLogic.BlFacade;
+import domain.CreditCard;
+import exceptions.UserAlreadyExists;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -13,6 +18,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CreditCardGUI extends JFrame {
 
@@ -22,12 +29,15 @@ public class CreditCardGUI extends JFrame {
 	private JTextField validity;
 	private JTextField cvv;
 
+	private BlFacade businessLogic;
 
 	/**
 	 * Create the frame.
 	 */
-	public CreditCardGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public CreditCardGUI(BlFacade businessLogic, String fullName, String email, String username, String password) {
+		this.businessLogic = businessLogic;
+		
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,6 +67,20 @@ public class CreditCardGUI extends JFrame {
 		cvv.setColumns(10);
 		
 		JButton confirmButton = new JButton("Confirm");
+		
+		CreditCardGUI credCardGui = this;
+		confirmButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				CreditCard creditCard = new CreditCard(holderName.getText(),cardNumber.getText(), validity.getText(), Integer.parseInt(cvv.getText()));
+				try {
+					businessLogic.createUser(username, password, fullName, email, creditCard);
+					credCardGui.setVisible(false);
+				}catch(UserAlreadyExists a) {
+					System.out.println(a.getMessage());
+				}
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

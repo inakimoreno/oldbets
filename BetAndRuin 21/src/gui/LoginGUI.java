@@ -66,6 +66,7 @@ public class LoginGUI extends JFrame {
 		});
 		
 		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("registerButton"));
+		/*
 		registerButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -81,7 +82,9 @@ public class LoginGUI extends JFrame {
 				}
 				
 			}
-		});
+			
+		}
+		);*/
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

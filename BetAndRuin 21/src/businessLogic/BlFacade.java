@@ -8,6 +8,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import domain.Bet;
+import domain.CreditCard;
 import domain.Event;
 import domain.Option;
 import domain.Question;
@@ -53,7 +54,7 @@ public interface BlFacade  {
 	@WebMethod public Vector<Date> getEventsMonth(Date date);
 	
 	
-	@WebMethod public void createUser(String username, String password) throws UserAlreadyExists;
+	@WebMethod public void createUser(String username, String password, String fullName, String email, CreditCard creditCard) throws UserAlreadyExists;
 	
 	
 	@WebMethod public User getUser(String username, String password);

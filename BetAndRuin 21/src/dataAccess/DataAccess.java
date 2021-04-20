@@ -19,6 +19,7 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Bet;
+import domain.CreditCard;
 import domain.Event;
 import domain.Option;
 import domain.Question;
@@ -274,15 +275,16 @@ public class DataAccess  {
 	}
 
 	
-	public void createUser(String username, String password) throws UserAlreadyExists{
+	public void createUser(String username, String password, String fullName, String email, CreditCard creditCard) throws UserAlreadyExists{
 
-		User us = new User(username, password, false);
+		User us = new User(username, password, false, fullName, email, creditCard);
 
 		if (us.equals(getUser(username, password))||existsUser(username)) throw new UserAlreadyExists(
 				ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExists"));
 
 		db.getTransaction().begin();
 		db.persist(us);
+		db.persist(creditCard);
 		db.getTransaction().commit();
 	}
 	

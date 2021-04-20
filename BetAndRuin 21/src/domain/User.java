@@ -21,22 +21,29 @@ public class User implements Serializable{
 	@Id 
 	//@XmlJavaTypeAdapter(IntegerAdapter.class)
 
+	private String fullName;
+	private String email;
 	private String username;
 	private String password;
 	private ArrayList<Bet> bets;
 	private boolean isAdmin;
+	
+	private CreditCard creditCard;
 	
 	public User() {
 		super();
 	}
 
 	
-	public User(String username, String password, boolean isAdmin) {
+	public User(String username, String password, boolean isAdmin, String fullName, String email, CreditCard creditCard) {
 		super();
 		this.username = username;
 		this.password = password;
 		bets = new ArrayList<Bet>();
 		this.isAdmin = isAdmin;
+		this.fullName = fullName;
+		this.email = email;
+		this.creditCard = creditCard;
 	}
 	
 	public boolean isAdmin() {

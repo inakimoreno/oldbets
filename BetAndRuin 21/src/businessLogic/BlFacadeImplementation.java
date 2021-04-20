@@ -16,6 +16,7 @@ import domain.Question;
 import domain.User;
 import domain.Option;
 import domain.Bet;
+import domain.CreditCard;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
@@ -111,9 +112,9 @@ public class BlFacadeImplementation implements BlFacade {
 		return dates;
 	}
 	
-	public void createUser(String username, String password) throws UserAlreadyExists{
+	public void createUser(String username, String password, String fullName, String email, CreditCard creditCard) throws UserAlreadyExists{
 		dbManager.open(false);
-		dbManager.createUser(username, password);		
+		dbManager.createUser(username, password, fullName, email, creditCard);		
 		dbManager.close();
 	}
 	

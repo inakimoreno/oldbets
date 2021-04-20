@@ -88,7 +88,7 @@ public class MainGUI extends JFrame {
 		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("registerButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RegisterGUI registerGUI = new RegisterGUI();
+				RegisterGUI registerGUI = new RegisterGUI(businessLogic);
 				registerGUI.setVisible(true);
 			}
 		});

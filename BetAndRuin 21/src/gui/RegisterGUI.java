@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import businessLogic.BlFacade;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -26,12 +29,15 @@ public class RegisterGUI extends JFrame {
 	private JPasswordField password;
 	private JPasswordField confPassword;
 
-
+	private BlFacade businessLogic;
+	
 	/**
 	 * Create the frame.
 	 */
-	public RegisterGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public RegisterGUI(BlFacade businessLogic) {
+		this.businessLogic = businessLogic;
+		
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,11 +69,21 @@ public class RegisterGUI extends JFrame {
 		
 		confPassword = new JPasswordField();
 		
+		RegisterGUI regGui = this;
 		JButton creditCardLinkButton = new JButton("Fill credit card informations");
 		creditCardLinkButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CreditCardGUI credcardGUI = new CreditCardGUI();
-				credcardGUI.setVisible(true);
+				if(password.getText().equals(confPassword.getText())) {
+					if(!fullName.getText().equals("")&&!email.getText().equals("")&&!username.getText().equals("")&&!password.getText().equals("")) {
+						CreditCardGUI credcardGUI = new CreditCardGUI(businessLogic, fullName.getText(), email.getText(), username.getText(), password.getText());
+						regGui.setVisible(false);
+						credcardGUI.setVisible(true);
+					}else {
+						///You must fill all text fields
+					}
+				}else {
+					//////// Passwords do not match
+				}
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
