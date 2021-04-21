@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 
 import businessLogic.BlFacade;
 import domain.Event;
-import domain.User;
+
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
