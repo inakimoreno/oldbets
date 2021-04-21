@@ -112,9 +112,9 @@ public class BlFacadeImplementation implements BlFacade {
 		return dates;
 	}
 	
-	public void createUser(String username, String password, String fullName, String email, CreditCard creditCard) throws UserAlreadyExists{
+	public void createUser(String username, String password, String fullName, String email, CreditCard creditCard, boolean isAdmin) throws UserAlreadyExists{
 		dbManager.open(false);
-		dbManager.createUser(username, password, fullName, email, creditCard);		
+		dbManager.createUser(username, password, fullName, email, creditCard, isAdmin);		
 		dbManager.close();
 	}
 	

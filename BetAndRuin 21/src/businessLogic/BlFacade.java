@@ -54,7 +54,7 @@ public interface BlFacade  {
 	@WebMethod public Vector<Date> getEventsMonth(Date date);
 	
 	
-	@WebMethod public void createUser(String username, String password, String fullName, String email, CreditCard creditCard) throws UserAlreadyExists;
+	@WebMethod public void createUser(String username, String password, String fullName, String email, CreditCard creditCard, boolean isAdmin) throws UserAlreadyExists;
 	
 	
 	@WebMethod public User getUser(String username, String password);
