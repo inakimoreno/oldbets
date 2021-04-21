@@ -32,6 +32,8 @@ import domain.Event;
 import domain.Option;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class CreateQuestionGUI extends JFrame {
 	
@@ -75,16 +77,25 @@ public class CreateQuestionGUI extends JFrame {
 		businessLogic = bl;		
 	}
 
-	public CreateQuestionGUI(BlFacade bl, Vector<domain.Event> v) {
+	public CreateQuestionGUI(BlFacade bl, Vector<domain.Event> v, MainGUI mainGui) {
+		CreateQuestionGUI createQuestionGui = this; 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				mainGui.setEnabled(true);
+				createQuestionGui.setVisible(false);
+			}
+		});
 		businessLogic = bl;
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		try {
-			jbInit(v);
+			jbInit(v, mainGui);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void jbInit(Vector<domain.Event> v) throws Exception {
+	private void jbInit(Vector<domain.Event> v, MainGUI mainGui) throws Exception {
 
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(646, 415));
@@ -114,6 +125,7 @@ public class CreateQuestionGUI extends JFrame {
 		closeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				mainGui.setEnabled(true);
 				jButtonClose_actionPerformed(e);
 			}
 		});

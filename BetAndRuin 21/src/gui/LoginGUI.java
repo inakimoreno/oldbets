@@ -21,6 +21,9 @@ import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.SystemColor;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 @SuppressWarnings("serial")
@@ -40,10 +43,16 @@ public class LoginGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginGUI(BlFacade businessLogic, MainGUI mainGui/*, BrowseQuestionsGUI browse*/) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				close();
+			}
+		});
 		//this.browse = browse;
 		this.mainGui = mainGui;
 		this.businessLogic = businessLogic;
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,26 +74,14 @@ public class LoginGUI extends JFrame {
 			}
 		});
 		
-		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("registerButton"));
-		/*
+		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+		
 		registerButton.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(!usernameInput.getText().equals("")&&!passwordInput.getText().equals("")) {
-						businessLogic.createUser(usernameInput.getText(), passwordInput.getText());	
-						logIn();
-					}else {
-						messagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("emptyFiledRegisterError"));
-					}
-				}catch(UserAlreadyExists a) {
-					messagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("userInUse"));
-				}
-				
+				close();
 			}
-			
 		}
-		);*/
+		);
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -106,6 +103,7 @@ public class LoginGUI extends JFrame {
 						.addComponent(messagePane, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(88, Short.MAX_VALUE))
 		);
+		messagePane.setBackground(SystemColor.menu);
 		messagePane.setEditable(false);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -130,6 +128,7 @@ public class LoginGUI extends JFrame {
 	}
 	
 	private void close() {
+		mainGui.setEnabled(true);
 		this.setVisible(false);
 	}
 	

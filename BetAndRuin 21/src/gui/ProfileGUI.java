@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import java.awt.SystemColor;
+import javax.swing.JTextPane;
+import java.awt.Color;
 
 public class ProfileGUI extends JFrame {
 
@@ -50,13 +54,16 @@ public class ProfileGUI extends JFrame {
 		profileHeaderLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		profileHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel usernameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("usernameLoginLabel"));
-		
-		JLabel emailLabel = new JLabel("Email");
-		
 		JScrollPane ongoingBetsScrollPane = new JScrollPane();
 		
 		JLabel ongoingBetsLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("pongoingBetsLabel"));
+		
+		
+		JLabel fullNameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ProfileGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		JLabel usernameLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ProfileGUI.lblNewLabel.text"));
+		
+		JLabel emailLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ProfileGUI.lblNewLabel.text"));
 		
 		JButton closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 		closeButton.addActionListener(new ActionListener() {
@@ -64,27 +71,54 @@ public class ProfileGUI extends JFrame {
 				close();
 			}
 		});
+		
+		JTextPane fullNameTextPane = new JTextPane();
+		fullNameTextPane.setEditable(false);
+		fullNameTextPane.setBackground(SystemColor.menu);
+		
+		
+		JTextPane usernameTextPane = new JTextPane();
+		usernameTextPane.setEditable(false);
+		usernameTextPane.setBackground(SystemColor.menu);
+		
+		
+		
+		JTextPane emailTextPane = new JTextPane();
+		emailTextPane.setBackground(SystemColor.menu);
+		
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addComponent(usernameLabel))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addComponent(emailLabel))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addComponent(ongoingBetsLabel))
-						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(ongoingBetsScrollPane, GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE))
 						.addComponent(profileHeaderLabel, GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap(713, Short.MAX_VALUE)
-							.addComponent(closeButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(closeButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(fullNameLabel, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(fullNameTextPane, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(emailLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(usernameLabel, GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
+									.addGap(18)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(emailTextPane, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+										.addComponent(usernameTextPane, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(ongoingBetsLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 0, Short.MAX_VALUE)))))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -92,15 +126,23 @@ public class ProfileGUI extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(profileHeaderLabel)
-					.addGap(28)
-					.addComponent(usernameLabel)
-					.addGap(35)
-					.addComponent(emailLabel)
-					.addGap(166)
+					.addGap(31)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(fullNameLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(fullNameTextPane, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(usernameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(usernameTextPane))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(emailLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(emailTextPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(139)
 					.addComponent(ongoingBetsLabel)
-					.addGap(18)
+					.addGap(19)
 					.addComponent(ongoingBetsScrollPane, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
 					.addComponent(closeButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
 		);
 		
@@ -137,6 +179,9 @@ public class ProfileGUI extends JFrame {
 			System.out.println(bet);
 			
 		}
+		fullNameTextPane.setText(businessLogic.getCurrentUser().getFullName());
+		usernameTextPane.setText(businessLogic.getCurrentUser().getUsername());
+		emailTextPane.setText(businessLogic.getCurrentUser().getEmail());
 	}
 	private void close() {
 		this.setVisible(false);
