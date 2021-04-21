@@ -71,6 +71,8 @@ public class LoginGUI extends JFrame {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logIn();
+				mainGui.loginButton.setVisible(false);
+				mainGui.logOutButton.setVisible(true);
 			}
 		});
 		

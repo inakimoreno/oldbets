@@ -101,6 +101,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		businessLogic = bl;
 	}
 
+
 	public BrowseQuestionsGUI(BlFacade bl, MainGUI mainGui) {
 		BrowseQuestionsGUI brwGui = this;
 		addWindowListener(new WindowAdapter() {
