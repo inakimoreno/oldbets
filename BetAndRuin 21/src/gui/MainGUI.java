@@ -139,7 +139,7 @@ public class MainGUI extends JFrame {
 	}
 
 	MainGUI maingui = this;
-	private JButton registerButton;
+	JButton registerButton;
 	private void initializeMainPane(MainGUI mainGui) {
 		mainPane = new JPanel();
 

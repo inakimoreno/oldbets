@@ -1,0 +1,34 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2021-04-21 21:22:38 #1 store] 
+Database 'C:\Users\Usuario\git\Bets_repo\BetAndRuin 21\bets.temp' is opened by 28124@DESKTOP-GUIG4CC
+
+[2021-04-21 21:22:38 #2 store] 
+Configuration path: ?
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2021-04-21 21:42:35 #1 store] 
+Database 'C:\Users\Usuario\git\Bets_repo\BetAndRuin 21\bets.temp' is opened by 24176@DESKTOP-GUIG4CC
+
+[2021-04-21 21:42:35 #2 store] 
+Configuration path: ?
+
+[2021-04-21 21:42:35 #3 type] 
+Type domain.Event is not enhanced.
+
+[2021-04-21 21:42:35 #4 type] 
+Type domain.Question is not enhanced.
+
+[2021-04-21 21:42:35 #5 type] 
+Type domain.Option is not enhanced.
+
+[2021-04-21 21:42:35 #6 type] 
+Type domain.User is not enhanced.
+
+[2021-04-21 21:42:35 #7 type] 
+Type domain.CreditCard is not enhanced.
+
+[2021-04-21 21:42:35 #8 type] 
+Type domain.Bet is not enhanced.
+

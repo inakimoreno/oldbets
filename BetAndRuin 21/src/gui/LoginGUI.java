@@ -142,6 +142,7 @@ public class LoginGUI extends JFrame {
 		else {
 			businessLogic.setCurrentUser(user);
 			mainGui.setCurrentUser(user);
+			mainGui.registerButton.setVisible(false);
 			if(user.isAdmin())
 				mainGui.createQuestionBtn.setVisible(true);
 			else
