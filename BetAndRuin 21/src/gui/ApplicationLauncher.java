@@ -9,6 +9,8 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 import configuration.ConfigXML;
+import domain.CreditCard;
+import exceptions.UserAlreadyExists;
 import businessLogic.BlFacade;
 import businessLogic.BlFacadeImplementation;
 
@@ -22,7 +24,7 @@ public class ApplicationLauncher {
 		System.out.println("Locale: " + Locale.getDefault());
 		MainGUI initWindow = new MainGUI();
 		BlFacade businessLogic;
-
+		CreditCard cd = new CreditCard("","","",0);
 		try {
 
 			
@@ -49,6 +51,14 @@ public class ApplicationLauncher {
 			} 
 			initWindow.setBussinessLogic(businessLogic);
 			initWindow.setVisible(true);
+			
+			if(config.getDataBaseOpenMode().equals("initialize")) {
+				try {
+					businessLogic.createUser("admin", "123", "admin", "admin@admin.com", cd, true);
+				} catch (UserAlreadyExists e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		catch (Exception e) {
 			initWindow.selectOptionLbl.setText("Error: " + e.toString());

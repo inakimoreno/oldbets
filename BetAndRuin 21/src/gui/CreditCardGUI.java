@@ -86,7 +86,7 @@ public class CreditCardGUI extends JFrame {
 				
 				CreditCard creditCard = new CreditCard(holderName.getText(),cardNumber.getText(), validity.getText(), Integer.parseInt(cvv.getText()));
 				try {
-					businessLogic.createUser(username, password, fullName, email, creditCard);
+					businessLogic.createUser(username, password, fullName, email, creditCard, false);
 					mainGui.setEnabled(true);
 					regGui.setVisible(false);
 					credCardGui.setVisible(false);
