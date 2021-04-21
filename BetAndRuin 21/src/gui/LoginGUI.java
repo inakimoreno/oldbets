@@ -71,6 +71,8 @@ public class LoginGUI extends JFrame {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logIn();
+				mainGui.loginButton.setVisible(false);
+				mainGui.logOutButton.setVisible(true);
 			}
 		});
 		
@@ -141,7 +143,6 @@ public class LoginGUI extends JFrame {
 		}
 		else {
 			businessLogic.setCurrentUser(user);
-			mainGui.setCurrentUser(user);
 			mainGui.registerButton.setVisible(false);
 			if(user.isAdmin())
 				mainGui.createQuestionBtn.setVisible(true);

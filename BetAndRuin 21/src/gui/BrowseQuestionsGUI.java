@@ -101,7 +101,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		businessLogic = bl;
 	}
 
-	public BrowseQuestionsGUI(BlFacade bl, User currentUser) {
+	public BrowseQuestionsGUI(BlFacade bl) {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
@@ -140,8 +140,8 @@ public class BrowseQuestionsGUI extends JFrame {
 			}
 		});
 		bettingButton.setVisible(false);
-		if(currentUser!=null) {
-			usernameLabel.setText(currentUser.getUsername());
+		if(businessLogic.getCurrentUser()!=null) {
+			usernameLabel.setText(businessLogic.getCurrentUser().getUsername());
 		}
 		try {
 			jbInit();
