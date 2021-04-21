@@ -1,8 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,10 +22,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
 import java.awt.SystemColor;
 import javax.swing.JTextPane;
-import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ProfileGUI extends JFrame {
 
@@ -42,9 +39,19 @@ public class ProfileGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ProfileGUI(BlFacade businessLogic) {
+	public ProfileGUI(BlFacade businessLogic, BrowseQuestionsGUI brwGui) {
+		ProfileGUI prfGui = this;
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				brwGui.setEnabled(true);
+				prfGui.setVisible(false);
+			
+			}
+		});
+
 		this.businessLogic = businessLogic;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 858, 632);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,6 +75,7 @@ public class ProfileGUI extends JFrame {
 		JButton closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				brwGui.setEnabled(true);
 				close();
 			}
 		});
@@ -179,9 +187,9 @@ public class ProfileGUI extends JFrame {
 			System.out.println(bet);
 			
 		}
-		fullNameTextPane.setText(businessLogic.getCurrentUser().getFullName());
-		usernameTextPane.setText(businessLogic.getCurrentUser().getUsername());
-		emailTextPane.setText(businessLogic.getCurrentUser().getEmail());
+		fullNameTextPane.setText(this.businessLogic.getCurrentUser().getFullName());
+		usernameTextPane.setText(this.businessLogic.getCurrentUser().getUsername());
+		emailTextPane.setText(this.businessLogic.getCurrentUser().getEmail());
 	}
 	private void close() {
 		this.setVisible(false);

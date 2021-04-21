@@ -41,8 +41,6 @@ public class MainGUI extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	public JLabel currentUserLabel;
 	
-	
-	private User currentUser;
 	private BlFacade businessLogic;
 
 	public BlFacade getBusinessLogic(){
@@ -147,17 +145,13 @@ public class MainGUI extends JFrame {
 				getString("SelectUseCase"));
 		selectOptionLbl.setHorizontalAlignment(SwingConstants.CENTER);
 
-		initializeBrowseQuestionsBtn();
+		initializeBrowseQuestionsBtn(mainGui);
 		initializeCreateQuestionBtn(mainGui);
 
 		initializeLocalePane();
 	}
-
-	public void setCurrentUser(User user) {
-		this.currentUser=user;
-	}
 	
-	private void initializeBrowseQuestionsBtn() {
+	private void initializeBrowseQuestionsBtn(MainGUI mainGui) {
 		
 		browseQuestionsBtn = new JButton();
 		browseQuestionsBtn.setText(ResourceBundle.getBundle("Etiquetas").
@@ -165,7 +159,8 @@ public class MainGUI extends JFrame {
 		browseQuestionsBtn.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, currentUser);
+				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, mainGui);
+				mainGui.setEnabled(false);
 				findQuestionsWindow.setVisible(true);
 			}
 		});
