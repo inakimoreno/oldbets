@@ -20,6 +20,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class CreditCardGUI extends JFrame {
 
@@ -34,10 +36,11 @@ public class CreditCardGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreditCardGUI(BlFacade businessLogic, String fullName, String email, String username, String password) {
+	public CreditCardGUI(BlFacade businessLogic, String fullName, String email, String username, String password, MainGUI mainGui, RegisterGUI regGui) {
+
 		this.businessLogic = businessLogic;
 		
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,12 +72,23 @@ public class CreditCardGUI extends JFrame {
 		JButton confirmButton = new JButton("Confirm");
 		
 		CreditCardGUI credCardGui = this;
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				regGui.setEnabled(true);
+				credCardGui.setVisible(false);
+			}
+		});
+		
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				CreditCard creditCard = new CreditCard(holderName.getText(),cardNumber.getText(), validity.getText(), Integer.parseInt(cvv.getText()));
 				try {
 					businessLogic.createUser(username, password, fullName, email, creditCard);
+					mainGui.setEnabled(true);
+					regGui.setVisible(false);
 					credCardGui.setVisible(false);
 				}catch(UserAlreadyExists a) {
 					System.out.println(a.getMessage());

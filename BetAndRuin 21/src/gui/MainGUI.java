@@ -70,25 +70,29 @@ public class MainGUI extends JFrame {
 				System.exit(1);
 			}
 		});
+		
+		MainGUI mainGui = this;
 
 		this.setBounds(100, 100, 640, 405);
 		//setBounds(100, 100, 551, 393);
-		this.initializeMainPane();
+		this.initializeMainPane(mainGui);
 		this.setContentPane(mainPane);
 		
-		MainGUI mainGui = this;
+		
 		
 		JButton loginButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("login"));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LoginGUI loginGUI = new LoginGUI(businessLogic, mainGui);
+				mainGui.setEnabled(false);
 				loginGUI.setVisible(true);
 			}
 		});
 		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("registerButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RegisterGUI registerGUI = new RegisterGUI(businessLogic);
+				RegisterGUI registerGUI = new RegisterGUI(businessLogic, mainGui);
+				mainGui.setEnabled(false);
 				registerGUI.setVisible(true);
 			}
 		});
@@ -136,7 +140,7 @@ public class MainGUI extends JFrame {
 
 	MainGUI maingui = this;
 	private JButton registerButton;
-	private void initializeMainPane() {
+	private void initializeMainPane(MainGUI mainGui) {
 		mainPane = new JPanel();
 
 		selectOptionLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").
@@ -144,7 +148,7 @@ public class MainGUI extends JFrame {
 		selectOptionLbl.setHorizontalAlignment(SwingConstants.CENTER);
 
 		initializeBrowseQuestionsBtn();
-		initializeCreateQuestionBtn();
+		initializeCreateQuestionBtn(mainGui);
 
 		initializeLocalePane();
 	}
@@ -167,7 +171,7 @@ public class MainGUI extends JFrame {
 		});
 	}
 
-	private void initializeCreateQuestionBtn() {
+	private void initializeCreateQuestionBtn(MainGUI mainGui) {
 		createQuestionBtn = new JButton();
 		createQuestionBtn.setVisible(false);
 		createQuestionBtn.setText(ResourceBundle.getBundle("Etiquetas").
@@ -176,7 +180,8 @@ public class MainGUI extends JFrame {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				CreateQuestionGUI createQuestionWindow = new CreateQuestionGUI(businessLogic,
-						new Vector<Event>());
+						new Vector<Event>(), mainGui);
+				mainGui.setEnabled(false);
 				createQuestionWindow.setBusinessLogic(businessLogic);
 				createQuestionWindow.setVisible(true);
 			}
