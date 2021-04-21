@@ -104,6 +104,9 @@ public class MainGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				businessLogic.setCurrentUser(null);
 				currentUserLabel.setText("Guest");
+				logOutButton.setVisible(false);
+				loginButton.setVisible(true);
+				registerButton.setVisible(true);
 			}
 		});
 		logOutButton.setVisible(false);
