@@ -66,27 +66,27 @@ public class DataAccess  {
 			int year = today.get(Calendar.YEAR);
 			if (month == 12) { month = 0; year += 1;}  
 
-			Event ev1 = new Event(1, "Atl�tico-Athletic", UtilDate.newDate(year, month, 17));
+			Event ev1 = new Event(1, "Atlï¿½tico-Athletic", UtilDate.newDate(year, month, 17));
 			Event ev2 = new Event(2, "Eibar-Barcelona", UtilDate.newDate(year, month, 17));
 			Event ev3 = new Event(3, "Getafe-Celta", UtilDate.newDate(year, month, 17));
-			Event ev4 = new Event(4, "Alav�s-Deportivo", UtilDate.newDate(year, month, 17));
-			Event ev5 = new Event(5, "Espa�ol-Villareal", UtilDate.newDate(year, month, 17));
+			Event ev4 = new Event(4, "Alavï¿½s-Deportivo", UtilDate.newDate(year, month, 17));
+			Event ev5 = new Event(5, "Espaï¿½ol-Villareal", UtilDate.newDate(year, month, 17));
 			Event ev6 = new Event(6, "Las Palmas-Sevilla", UtilDate.newDate(year, month, 17));
 			Event ev7 = new Event(7, "Malaga-Valencia", UtilDate.newDate(year, month, 17));
-			Event ev8 = new Event(8, "Girona-Legan�s", UtilDate.newDate(year, month, 17));
+			Event ev8 = new Event(8, "Girona-Leganï¿½s", UtilDate.newDate(year, month, 17));
 			Event ev9 = new Event(9, "Real Sociedad-Levante", UtilDate.newDate(year, month, 17));
 			Event ev10 = new Event(10, "Betis-Real Madrid", UtilDate.newDate(year, month, 17));
 
 			Event ev11 = new Event(11, "Atletico-Athletic", UtilDate.newDate(year, month, 1));
 			Event ev12 = new Event(12, "Eibar-Barcelona", UtilDate.newDate(year, month, 1));
 			Event ev13 = new Event(13, "Getafe-Celta", UtilDate.newDate(year, month, 1));
-			Event ev14 = new Event(14, "Alav�s-Deportivo", UtilDate.newDate(year, month, 1));
-			Event ev15 = new Event(15, "Espa�ol-Villareal", UtilDate.newDate(year, month, 1));
+			Event ev14 = new Event(14, "Alavï¿½s-Deportivo", UtilDate.newDate(year, month, 1));
+			Event ev15 = new Event(15, "Espaï¿½ol-Villareal", UtilDate.newDate(year, month, 1));
 			Event ev16 = new Event(16, "Las Palmas-Sevilla", UtilDate.newDate(year, month, 1));
 
 
-			Event ev17 = new Event(17, "M�laga-Valencia", UtilDate.newDate(year, month + 1, 28));
-			Event ev18 = new Event(18, "Girona-Legan�s", UtilDate.newDate(year, month + 1, 28));
+			Event ev17 = new Event(17, "Mï¿½laga-Valencia", UtilDate.newDate(year, month + 1, 28));
+			Event ev18 = new Event(18, "Girona-Leganï¿½s", UtilDate.newDate(year, month + 1, 28));
 			Event ev19 = new Event(19, "Real Sociedad-Levante", UtilDate.newDate(year, month + 1, 28));
 			Event ev20 = new Event(20, "Betis-Real Madrid", UtilDate.newDate(year, month + 1, 28));
 			/*
@@ -99,12 +99,12 @@ public class DataAccess  {
 
 			
 			if (Locale.getDefault().equals(new Locale("es"))) {
-				q1 = ev1.addQuestion("�Qui�n ganar� el partido?", 1);
-				q2 = ev1.addQuestion("�Qui�n meter� el primer gol?", 2);
-				q3 = ev11.addQuestion("�Qui�n ganar� el partido?", 1);
-				q4 = ev11.addQuestion("�Cu�ntos goles se marcar�n?", 2);
-				q5 = ev17.addQuestion("�Qui�n ganar� el partido?", 1);
-				q6 = ev17.addQuestion("�Habr� goles en la primera parte?", 2);
+				q1 = ev1.addQuestion("ï¿½Quiï¿½n ganarï¿½ el partido?", 1);
+				q2 = ev1.addQuestion("ï¿½Quiï¿½n meterï¿½ el primer gol?", 2);
+				q3 = ev11.addQuestion("ï¿½Quiï¿½n ganarï¿½ el partido?", 1);
+				q4 = ev11.addQuestion("ï¿½Cuï¿½ntos goles se marcarï¿½n?", 2);
+				q5 = ev17.addQuestion("ï¿½Quiï¿½n ganarï¿½ el partido?", 1);
+				q6 = ev17.addQuestion("ï¿½Habrï¿½ goles en la primera parte?", 2);
 			}
 			else if (Locale.getDefault().equals(new Locale("en"))) {
 				q1 = ev1.addQuestion("Who will win the match?", 1);
@@ -275,9 +275,9 @@ public class DataAccess  {
 	}
 
 	
-	public void createUser(String username, String password, String fullName, String email, CreditCard creditCard) throws UserAlreadyExists{
+	public void createUser(String username, String password, String fullName, String email, CreditCard creditCard, boolean isAdmin) throws UserAlreadyExists{
 
-		User us = new User(username, password, false, fullName, email, creditCard);
+		User us = new User(username, password, isAdmin, fullName, email, creditCard);
 
 		if (us.equals(getUser(username, password))||existsUser(username)) throw new UserAlreadyExists(
 				ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExists"));

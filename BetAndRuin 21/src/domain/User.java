@@ -17,12 +17,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+
 	
-	@Id 
 	//@XmlJavaTypeAdapter(IntegerAdapter.class)
 
 	private String fullName;
 	private String email;
+	@Id 
 	private String username;
 	private String password;
 	private ArrayList<Bet> bets;
@@ -44,6 +45,22 @@ public class User implements Serializable{
 		this.fullName = fullName;
 		this.email = email;
 		this.creditCard = creditCard;
+	}
+	
+	public String getFullName() {
+		return this.fullName;
+	}
+	
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public boolean isAdmin() {

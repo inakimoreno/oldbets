@@ -101,14 +101,17 @@ public class BrowseQuestionsGUI extends JFrame {
 		businessLogic = bl;
 	}
 
-	public BrowseQuestionsGUI(BlFacade bl, User currentUser) {
+
+	public BrowseQuestionsGUI(BlFacade bl, MainGUI mainGui) {
+		BrowseQuestionsGUI brwGui = this;
 		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosed(WindowEvent arg0) {
-				businessLogic.setCurrentUser(null);
-				
+			public void windowClosing(WindowEvent e) {
+				mainGui.setEnabled(true);
+				brwGui.setVisible(false);
 			}
 		});
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		businessLogic = bl;
 		bettingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -140,11 +143,11 @@ public class BrowseQuestionsGUI extends JFrame {
 			}
 		});
 		bettingButton.setVisible(false);
-		if(currentUser!=null) {
-			usernameLabel.setText(currentUser.getUsername());
+		if(businessLogic.getCurrentUser()!=null) {
+			usernameLabel.setText(businessLogic.getCurrentUser().getUsername());
 		}
 		try {
-			jbInit();
+			jbInit(mainGui, brwGui);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -154,7 +157,7 @@ public class BrowseQuestionsGUI extends JFrame {
 	BrowseQuestionsGUI browse = this;
 	protected JTextField betAmountField;
 	protected final JLabel betLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("betLabel")); //$NON-NLS-1$ //$NON-NLS-2$
-	private void jbInit() throws Exception {
+	private void jbInit(MainGUI mainGui, BrowseQuestionsGUI brwGui) throws Exception {
 
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 525));
@@ -175,6 +178,7 @@ public class BrowseQuestionsGUI extends JFrame {
 		closeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				mainGui.setEnabled(true);
 				jButton2_actionPerformed(e);
 				businessLogic.setCurrentUser(null);
 			}
@@ -378,7 +382,8 @@ public class BrowseQuestionsGUI extends JFrame {
 		getContentPane().add(betMessagePane);
 		profileButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ProfileGUI profile = new ProfileGUI(businessLogic);
+				ProfileGUI profile = new ProfileGUI(businessLogic, brwGui);
+				brwGui.setEnabled(false);
 				profile.setVisible(true);
 			}
 		});
