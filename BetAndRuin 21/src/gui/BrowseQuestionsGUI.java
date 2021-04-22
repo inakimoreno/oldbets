@@ -180,7 +180,6 @@ public class BrowseQuestionsGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				mainGui.setEnabled(true);
 				jButton2_actionPerformed(e);
-				businessLogic.setCurrentUser(null);
 			}
 		});
 
