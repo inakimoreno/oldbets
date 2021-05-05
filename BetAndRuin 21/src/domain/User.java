@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
 
 
 
@@ -19,10 +20,9 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	
-	//@XmlJavaTypeAdapter(IntegerAdapter.class)
-
 	private String fullName;
 	private String email;
+	@XmlID
 	@Id 
 	private String username;
 	private String password;

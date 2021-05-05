@@ -68,7 +68,7 @@ public interface BlFacade  {
 	
 	@WebMethod public boolean addBetToUser(Event ev, Question qu, Option option, String amount);
 	
+	
 	@WebMethod public ArrayList<Bet> getBets();
 	
-	//@WebMethod public ArrayList<String> getQuestionOptions(Question qu);
 }

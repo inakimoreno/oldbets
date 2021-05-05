@@ -14,6 +14,8 @@ import javax.swing.border.EmptyBorder;
 import javax.xml.ws.Endpoint;
 
 import configuration.ConfigXML;
+import domain.CreditCard;
+import exceptions.UserAlreadyExists;
 
 /**
  * Runs the Business Logic node as a separate, possibly remote process.
@@ -72,10 +74,20 @@ public class BusinessLogicServer extends JDialog {
 				service= "http://" + config.getBusinessLogicNode() + ":" +
 						config.getBusinessLogicPort()+"/ws/"+config.getBusinessLogicName();
 
-				Endpoint.publish(service, new BlFacadeImplementation());
+				BlFacadeImplementation bizLog = new BlFacadeImplementation();
+				
+				Endpoint.publish(service, bizLog);
 
 				textArea.append("Running service at:\t" + service);
 				textArea.append("\nPress button to stop this server... ");
+				
+				if(config.getDataBaseOpenMode().equals("initialize")) {
+					try {
+						bizLog.createUser("admin", "123", "admin", "admin@admin.com", new CreditCard(), true);
+					} catch (UserAlreadyExists e) {
+						e.printStackTrace();
+					}
+				}
 
 			} catch (Exception e) {
 				System.out.println("Error in BusinessLogicServer: " + e.toString());

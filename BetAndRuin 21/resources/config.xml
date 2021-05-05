@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-  <businessLogic local="true"> 
-	<businessLogicNode>0.0.0.0</businessLogicNode>
+  <businessLogic local="false"> 
+	<businessLogicNode>192.168.0.14</businessLogicNode>
 	<businessLogicPort>1099</businessLogicPort>
 	<businessLogicName>Bets</businessLogicName>
   </businessLogic>
@@ -9,7 +9,7 @@
 	<dataAccessNode>0.0.0.0</dataAccessNode>
 	<dataAccessPort>6136</dataAccessPort>
 	<dataBaseFilename>bets.temp</dataBaseFilename>
-	<dataBaseOpenMode>initialize</dataBaseOpenMode>
+	<dataBaseOpenMode>open</dataBaseOpenMode>
 	<dataBaseUser>admin</dataBaseUser>
 	<dataBasePassword>admin</dataBasePassword>
   </dataAccess>

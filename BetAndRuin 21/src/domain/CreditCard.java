@@ -6,19 +6,25 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class CreditCard implements Serializable{
 
-	@Id
+	
 	private String holderName;
 	@Id
+	@XmlID
 	private String cardNumber;
-	@Id
+	
 	private String validityDate;
-	@Id
+	
 	private int CVV;
+	
+	public CreditCard() {
+		
+	}
 	
 	public CreditCard(String holderName, String cardNumber, String validityDate, int CVV) {
 		this.holderName = holderName;

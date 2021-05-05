@@ -54,10 +54,12 @@ public class ApplicationLauncher {
 			initWindow.setVisible(true);
 			
 			if(config.getDataBaseOpenMode().equals("initialize")) {
-				try {
-					businessLogic.createUser("admin", "123", "admin", "admin@admin.com", cd, true);
-				} catch (UserAlreadyExists e) {
-					e.printStackTrace();
+				if(config.isBusinessLogicLocal()) {
+					try {
+						businessLogic.createUser("admin", "123", "admin", "admin@admin.com", cd, true);
+					} catch (UserAlreadyExists e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}

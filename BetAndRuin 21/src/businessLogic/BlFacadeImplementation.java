@@ -41,7 +41,7 @@ public class BlFacadeImplementation implements BlFacade {
 			dbManager.initializeDB();
 		dbManager.close();
 	}
-
+	
 	public BlFacadeImplementation(DataAccess dam)  {
 		System.out.println("Creating BlFacadeImplementation instance with DataAccess parameter");
 		if (config.getDataBaseOpenMode().equals("initialize")) {
@@ -112,13 +112,16 @@ public class BlFacadeImplementation implements BlFacade {
 		return dates;
 	}
 	
+	@Override
+	@WebMethod
 	public void createUser(String username, String password, String fullName, String email, CreditCard creditCard, boolean isAdmin) throws UserAlreadyExists{
 		dbManager.open(false);
 		dbManager.createUser(username, password, fullName, email, creditCard, isAdmin);		
 		dbManager.close();
 	}
 	
-	
+	@Override
+	@WebMethod
 	public User getUser(String username, String password) {
 		dbManager.open(false);
 		User user = dbManager.getUser(username, password);
@@ -126,18 +129,25 @@ public class BlFacadeImplementation implements BlFacade {
 		return user;
 	}
 
+	@WebMethod
 	public void close() {
 		dbManager.close();
 	}
 
+	@Override
+	@WebMethod
 	public void setCurrentUser(User user) {
 		this.currentUser=user;
 	}
 	
+	@Override
+	@WebMethod
 	public User getCurrentUser() {
 		return currentUser;
 	}
 	
+	@Override
+	@WebMethod
 	public boolean addBetToUser(Event ev, Question qu, Option option, String amount) {
 		float floatAmount;
 		try {
@@ -155,6 +165,8 @@ public class BlFacadeImplementation implements BlFacade {
 		return true;
 	}
 	
+	@Override
+	@WebMethod
 	public ArrayList<Bet> getBets(){
 		ArrayList<Bet> bets = new ArrayList<Bet>();
 		dbManager.open(false);
