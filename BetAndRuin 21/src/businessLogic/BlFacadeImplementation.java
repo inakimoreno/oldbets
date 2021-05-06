@@ -176,6 +176,55 @@ public class BlFacadeImplementation implements BlFacade {
 		return bets;
 	}
 	
+	@Override
+	@WebMethod
+	public void addBalance(Integer amount) {
+		dbManager.open(false);
+		dbManager.addBalance(amount, this.currentUser);
+		dbManager.close();
+	}
+	
+	@Override
+	@WebMethod
+	public void substractBalance(Integer amount) {
+		dbManager.open(false);
+		dbManager.substractBalance(amount, this.currentUser);
+		dbManager.close();
+	}
+	
+	@Override
+	@WebMethod
+	public CreditCard getCreditCard(String cardNumber) {
+		dbManager.open(false);
+		CreditCard cc = dbManager.getCreditCard(cardNumber);
+		dbManager.close();
+		return cc;
+	}
+	
+	@Override
+	@WebMethod
+	public Integer getBalance() {
+		dbManager.open(false);
+		Integer balance = dbManager.getBalance(this.currentUser);
+		dbManager.close();
+		return balance;
+	}
+	
+	@Override
+	@WebMethod
+	public void addMoneyCreditCard(String cardNumber, Integer amount) {
+		dbManager.open(false);
+		dbManager.sumCreditCard(cardNumber, amount);
+		dbManager.close();
+	}
+	
+	@Override
+	@WebMethod
+	public void substractMoneyCreditCard(String cardNumber, Integer amount) {
+		dbManager.open(false);
+		dbManager.substractCreditCard(cardNumber, amount);
+		dbManager.close();
+	}
 	
 	/**
 	 * This method invokes the data access to initialize the database with some events and questions.

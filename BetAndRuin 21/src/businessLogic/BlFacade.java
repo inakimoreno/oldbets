@@ -71,4 +71,22 @@ public interface BlFacade  {
 	
 	@WebMethod public ArrayList<Bet> getBets();
 	
+	
+	@WebMethod public CreditCard getCreditCard(String cardNumber);
+	
+	
+	@WebMethod public void addMoneyCreditCard(String cardNumber, Integer amount);
+	
+	
+	@WebMethod public void substractMoneyCreditCard(String cardNumber, Integer amount);
+	
+	
+	@WebMethod public void addBalance(Integer amount);
+	
+	
+	@WebMethod public void substractBalance(Integer amount);
+	
+	
+	@WebMethod public Integer getBalance();
+	
 }

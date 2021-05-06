@@ -329,6 +329,67 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
+	public CreditCard getCreditCard(String cardNumber) {
+		CreditCard ret=null;
+		TypedQuery<CreditCard> cc = db.createQuery("SELECT cc FROM CreditCard cc "
+				+ "WHERE cc.cardNumber =\""+cardNumber+"\"", CreditCard.class);
+		try {
+		ret = cc.getSingleResult();
+		}catch(NoResultException e) {
+			System.out.println("Username or password exception: "+e.getMessage());
+			return null;
+		}
+		
+		return ret;
+	}
+	
+	public void sumCreditCard(String cardNumber, Integer amount) {
+		db.getTransaction().begin();
+		TypedQuery<CreditCard> cc = db.createQuery("SELECT cc FROM CreditCard cc "
+				+ "WHERE cc.cardNumber =\""+cardNumber+"\"", CreditCard.class);
+		try {
+			CreditCard cred = (CreditCard) cc.getSingleResult();
+			cred.addBalance(amount);
+			db.getTransaction().commit();
+		}catch(NoResultException e) {
+			
+		}
+	
+	}
+	
+	public void substractCreditCard(String cardNumber, Integer amount) {
+		db.getTransaction().begin();
+		TypedQuery<CreditCard> cc = db.createQuery("SELECT cc FROM CreditCard cc "
+				+ "WHERE cc.cardNumber =\""+cardNumber+"\"", CreditCard.class);
+		try {
+			CreditCard cred = (CreditCard) cc.getSingleResult();
+			cred.takeBalance(amount);
+			db.getTransaction().commit();
+		}catch(NoResultException e) {
+			
+		}
+	
+	}
+	
+	public void addBalance(Integer amount, User us) {
+		db.getTransaction().begin();
+		User user = getUser(us.getUsername(),us.getPassword());
+		user.addBalance(amount);
+		db.getTransaction().commit();
+	}
+	
+	public void substractBalance(Integer amount, User us) {
+		db.getTransaction().begin();
+		User user = getUser(us.getUsername(),us.getPassword());
+		user.substractBalance(amount);;
+		db.getTransaction().commit();
+	}
+	
+	public Integer getBalance(User us) {
+		User user = getUser(us.getUsername(),us.getPassword());
+		return user.getBalance();	
+	}
+	
 	public void close(){
 		db.close();
 		System.out.println("DataBase is closed");

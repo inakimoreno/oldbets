@@ -94,19 +94,27 @@ public class ProfileGUI extends JFrame {
 		JTextPane emailTextPane = new JTextPane();
 		emailTextPane.setBackground(SystemColor.menu);
 		
+		JButton WalletButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ProfileGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		WalletButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MoneyGUI wallet = new MoneyGUI(businessLogic);
+				wallet.setVisible(true);
+			}
+		});
+		
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(profileHeaderLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(profileHeaderLabel, GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(ongoingBetsScrollPane, GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addContainerGap(713, Short.MAX_VALUE)
+							.addComponent(ongoingBetsScrollPane, GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap(714, Short.MAX_VALUE)
 							.addComponent(closeButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
@@ -115,11 +123,16 @@ public class ProfileGUI extends JFrame {
 								.addComponent(fullNameLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(emailLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(ongoingBetsLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGap(27)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(emailTextPane, GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
-								.addComponent(fullNameTextPane, GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
-								.addComponent(usernameTextPane, GroupLayout.DEFAULT_SIZE, 758, Short.MAX_VALUE))))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(27)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(emailTextPane, GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+										.addComponent(fullNameTextPane, GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+										.addComponent(usernameTextPane, GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(WalletButton)))))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -139,8 +152,10 @@ public class ProfileGUI extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addComponent(emailTextPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(emailLabel))
-					.addGap(53)
-					.addComponent(ongoingBetsLabel)
+					.addGap(44)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(ongoingBetsLabel)
+						.addComponent(WalletButton))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(ongoingBetsScrollPane, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
