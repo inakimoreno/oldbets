@@ -34,6 +34,7 @@ public class MainGUI extends JFrame {
 	protected JLabel selectOptionLbl;
 	private JButton browseQuestionsBtn;
 	JButton createQuestionBtn;
+	JButton setOutcomeButton;
 	private JPanel localePane;
 	private JRadioButton euskaraRbtn;
 	private JRadioButton castellanoRbtn;
@@ -99,7 +100,7 @@ public class MainGUI extends JFrame {
 		currentUserLabel = new JLabel();
 		currentUserLabel.setText(ResourceBundle.getBundle("Etiquetas").getString("usernameLabel"));
 		
-		logOutButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		logOutButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("logOut")); //$NON-NLS-1$ //$NON-NLS-2$
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				businessLogic.setCurrentUser(null);
@@ -108,26 +109,37 @@ public class MainGUI extends JFrame {
 				loginButton.setVisible(true);
 				registerButton.setVisible(true);
 				createQuestionBtn.setVisible(false);
+				setOutcomeButton.setVisible(false);
 			}
 		});
 		logOutButton.setVisible(false);
+		
+		setOutcomeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("setOutcome")); //$NON-NLS-1$ //$NON-NLS-2$
+		setOutcomeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SetOutcomeGUI setOutcomeGui = new SetOutcomeGUI(businessLogic,new Vector<Event>(),mainGui);
+				setOutcomeGui.setVisible(true);
+			}
+		});
+		setOutcomeButton.setVisible(false);
 		GroupLayout gl_mainPane = new GroupLayout(mainPane);
 		gl_mainPane.setHorizontalGroup(
 			gl_mainPane.createParallelGroup(Alignment.TRAILING)
-				.addComponent(browseQuestionsBtn, GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
+				.addComponent(browseQuestionsBtn, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
 				.addGroup(gl_mainPane.createSequentialGroup()
-					.addComponent(selectOptionLbl, GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+					.addComponent(selectOptionLbl, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(currentUserLabel)
 					.addGap(74))
-				.addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
-				.addComponent(registerButton, GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
-				.addGroup(gl_mainPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(localePane, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
-					.addContainerGap())
+				.addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+				.addComponent(registerButton, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
 				.addComponent(logOutButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
 				.addComponent(createQuestionBtn, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+				.addGroup(Alignment.LEADING, gl_mainPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(localePane, GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+					.addContainerGap())
+				.addComponent(setOutcomeButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
 		);
 		gl_mainPane.setVerticalGroup(
 			gl_mainPane.createParallelGroup(Alignment.LEADING)
@@ -145,9 +157,11 @@ public class MainGUI extends JFrame {
 					.addComponent(logOutButton, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(createQuestionBtn, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-					.addGap(23)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(setOutcomeButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(localePane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(78))
+					.addGap(33))
 		);
 		mainPane.setLayout(gl_mainPane);
 

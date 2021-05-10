@@ -75,18 +75,26 @@ public interface BlFacade  {
 	@WebMethod public CreditCard getCreditCard(String cardNumber);
 	
 	
-	@WebMethod public void addMoneyCreditCard(String cardNumber, Integer amount);
+	@WebMethod public void addMoneyCreditCard(String cardNumber, float amount);
 	
 	
-	@WebMethod public void substractMoneyCreditCard(String cardNumber, Integer amount);
+	@WebMethod public void substractMoneyCreditCard(String cardNumber, float amount);
 	
 	
-	@WebMethod public void addBalance(Integer amount);
+	@WebMethod public void addBalance(float amount);
 	
 	
-	@WebMethod public void substractBalance(Integer amount);
+	@WebMethod public void substractBalance(float amount);
 	
 	
-	@WebMethod public Integer getBalance();
+	@WebMethod public float getBalance();
 	
+	
+	@WebMethod public void setOutcome(Question qu, Option opt);
+	
+	
+	@WebMethod public void updateBets(Event ev, Question qu, Option opt);
+	
+	
+	@WebMethod public void pay();
 }

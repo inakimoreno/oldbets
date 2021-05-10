@@ -51,4 +51,8 @@ public class Option {
 	public boolean getOutcome() {
 		return this.outcome;
 	}
+	
+	public String toString() {
+		return this.getName();
+	}
 }

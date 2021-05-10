@@ -3,6 +3,7 @@ package businessLogic;
 import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -178,7 +179,7 @@ public class BlFacadeImplementation implements BlFacade {
 	
 	@Override
 	@WebMethod
-	public void addBalance(Integer amount) {
+	public void addBalance(float amount) {
 		dbManager.open(false);
 		dbManager.addBalance(amount, this.currentUser);
 		dbManager.close();
@@ -186,7 +187,7 @@ public class BlFacadeImplementation implements BlFacade {
 	
 	@Override
 	@WebMethod
-	public void substractBalance(Integer amount) {
+	public void substractBalance(float amount) {
 		dbManager.open(false);
 		dbManager.substractBalance(amount, this.currentUser);
 		dbManager.close();
@@ -203,16 +204,16 @@ public class BlFacadeImplementation implements BlFacade {
 	
 	@Override
 	@WebMethod
-	public Integer getBalance() {
+	public float getBalance() {
 		dbManager.open(false);
-		Integer balance = dbManager.getBalance(this.currentUser);
+		float balance = dbManager.getBalance(this.currentUser);
 		dbManager.close();
 		return balance;
 	}
 	
 	@Override
 	@WebMethod
-	public void addMoneyCreditCard(String cardNumber, Integer amount) {
+	public void addMoneyCreditCard(String cardNumber, float amount) {
 		dbManager.open(false);
 		dbManager.sumCreditCard(cardNumber, amount);
 		dbManager.close();
@@ -220,12 +221,58 @@ public class BlFacadeImplementation implements BlFacade {
 	
 	@Override
 	@WebMethod
-	public void substractMoneyCreditCard(String cardNumber, Integer amount) {
+	public void substractMoneyCreditCard(String cardNumber, float amount) {
 		dbManager.open(false);
 		dbManager.substractCreditCard(cardNumber, amount);
 		dbManager.close();
 	}
 	
+	@Override
+	@WebMethod
+	public void setOutcome(Question qu, Option opt) {
+		dbManager.open(false);
+		dbManager.setOutcome(qu.getQuestionNumber(),opt);
+		dbManager.close();
+	}
+	
+	public void updateBets(Event ev, Question qu, Option opt) {
+		dbManager.open(false);
+		dbManager.updateBets(ev, qu, opt);
+		dbManager.close();
+	}
+	
+	public List<User> getAllUsers(){
+		dbManager.open(false);
+		List<User> result = dbManager.getAllUsers();
+		dbManager.close();
+		return result;
+	}
+	
+	public List<Bet> getBets(User user){
+		dbManager.open(false);
+		List<Bet> result = dbManager.getBets(user);
+		dbManager.close();
+		return result;
+	}
+	
+	public void pay() {
+		
+		for(User user:getAllUsers()) {
+			System.out.println(user);
+			for(Bet bet:getBets(user)) {
+				System.out.println("-------------");
+				if(bet.isResult()&&!bet.isPaid()) {
+					dbManager.open(false);
+					System.out.println(user.getBalance());
+					dbManager.addBalance(bet.getPossibleRevenue(), user);
+					System.out.println(user.getBalance());
+					dbManager.setPaid(bet);
+					dbManager.close();
+				}
+			}
+		}
+		
+	}
 	/**
 	 * This method invokes the data access to initialize the database with some events and questions.
 	 * It is invoked only when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file

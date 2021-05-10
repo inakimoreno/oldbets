@@ -24,7 +24,7 @@ public class Question implements Serializable {
 
 	private String question; 
 	private float betMinimum;
-	private String result; 
+	private Option outcome; 
 	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private ArrayList<Option> options = new ArrayList<Option>();
 
@@ -115,8 +115,8 @@ public class Question implements Serializable {
 	 * 
 	 * @return the the query result
 	 */
-	public String getResult() {
-		return result;
+	public Option getOutcome() {
+		return outcome;
 	}
 
 	/**
@@ -124,8 +124,8 @@ public class Question implements Serializable {
 	 * 
 	 * @param correct result of the query
 	 */
-	public void setResult(String result) {
-		this.result = result;
+	public void setOutcome(Option outcome) {
+		this.outcome = outcome;
 	}
 
 	/**
@@ -156,6 +156,6 @@ public class Question implements Serializable {
 	
 	@Override
 	public String toString(){
-		return questionNumber + ";" + question + ";" + Float.toString(betMinimum)+ options;
+		return question;
 	}	
 }

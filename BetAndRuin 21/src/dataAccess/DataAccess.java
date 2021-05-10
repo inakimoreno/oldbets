@@ -343,7 +343,7 @@ public class DataAccess  {
 		return ret;
 	}
 	
-	public void sumCreditCard(String cardNumber, Integer amount) {
+	public void sumCreditCard(String cardNumber, float amount) {
 		db.getTransaction().begin();
 		TypedQuery<CreditCard> cc = db.createQuery("SELECT cc FROM CreditCard cc "
 				+ "WHERE cc.cardNumber =\""+cardNumber+"\"", CreditCard.class);
@@ -357,7 +357,7 @@ public class DataAccess  {
 	
 	}
 	
-	public void substractCreditCard(String cardNumber, Integer amount) {
+	public void substractCreditCard(String cardNumber, float amount) {
 		db.getTransaction().begin();
 		TypedQuery<CreditCard> cc = db.createQuery("SELECT cc FROM CreditCard cc "
 				+ "WHERE cc.cardNumber =\""+cardNumber+"\"", CreditCard.class);
@@ -371,23 +371,82 @@ public class DataAccess  {
 	
 	}
 	
-	public void addBalance(Integer amount, User us) {
+	public void addBalance(float amount, User us) {
 		db.getTransaction().begin();
 		User user = getUser(us.getUsername(),us.getPassword());
 		user.addBalance(amount);
 		db.getTransaction().commit();
 	}
 	
-	public void substractBalance(Integer amount, User us) {
+	public void substractBalance(float amount, User us) {
 		db.getTransaction().begin();
 		User user = getUser(us.getUsername(),us.getPassword());
 		user.substractBalance(amount);;
 		db.getTransaction().commit();
 	}
 	
-	public Integer getBalance(User us) {
+	public float getBalance(User us) {
 		User user = getUser(us.getUsername(),us.getPassword());
 		return user.getBalance();	
+	}
+	
+	public void setOutcome(Integer questNumb, Option opt) {
+		db.getTransaction().begin();
+		TypedQuery<Question> qu = db.createQuery("SELECT qu FROM Question qu "
+				, Question.class);
+		
+		List<Question> questions = qu.getResultList();
+		Question result = null;
+		for(Question question:questions) {
+			if(question.getQuestionNumber()==questNumb) {
+				result = question;
+			}
+		}
+		result.setOutcome(opt);
+		db.getTransaction().commit();
+	}
+	
+	public List<User> getAllUsers(){
+
+		TypedQuery<User> users = db.createQuery("SELECT us FROM User us",User.class);
+		return users.getResultList();
+		
+	}
+	
+	public void updateBets(Event ev, Question qu, Option opt) {
+		db.getTransaction().begin();
+		ArrayList<User> users = new ArrayList<>();
+		TypedQuery<Bet> bets = db.createQuery("SELECT be FROM Bet be "
+				+ "WHERE be.event.toString() =\""+ev.toString()+"\"AND be.question.toString()=\""+qu.toString()+"\"AND be.option.toString() =\""+opt.toString()+"", Bet.class);
+		List<Bet> result = bets.getResultList();
+		for(Bet bet:result) {
+			bet.setResult(true);
+		}
+		/*users.addAll(getAllUsers());
+		*/
+		db.getTransaction().commit();
+	}
+	
+	public void setPaid(Bet bet) {
+		db.getTransaction().begin();
+		TypedQuery<Bet> bets = db.createQuery("SELECT be FROM Bet be "
+				+ "WHERE be.event.toString() =\""+bet.getEvent().toString()+"\"AND be.question.toString()=\""+bet.getQuestion().toString()+"\"AND be.option.toString() =\""+bet.getOption().toString()+"", Bet.class);
+		List<Bet> result = bets.getResultList();
+		for(Bet bet1:result) {
+			bet1.setPaid();
+		}
+		db.getTransaction().commit();
+	}
+	
+	public List<Bet> getBets(User us){
+		db.getTransaction().begin();
+		ArrayList<Bet> result = new ArrayList<>();
+		TypedQuery<User> user = db.createQuery("SELECT us FROM User us "
+				+ "WHERE us.username=\""+us.getUsername()+"\"", User.class);
+		User user1 = user.getSingleResult();
+		result = user1.getBets();
+		System.out.println(result);
+		return result;
 	}
 	
 	public void close(){

@@ -21,7 +21,7 @@ public class CreditCard implements Serializable{
 	private String validityDate;
 	
 	private int CVV;
-	private Integer balance = 1000;
+	private float balance = 1000;
 	public CreditCard() {
 		
 	}
@@ -33,15 +33,15 @@ public class CreditCard implements Serializable{
 		this.CVV= CVV;
 	}
 	
-	public void takeBalance(Integer amount) {
+	public void takeBalance(float amount) {
 			this.balance-=amount;
 	}
 	
-	public void addBalance(Integer amount) {
+	public void addBalance(float amount) {
 		this.balance += amount;
 	}
 
-	public int getBalance() {
+	public float getBalance() {
 		return this.balance;
 	}
 	

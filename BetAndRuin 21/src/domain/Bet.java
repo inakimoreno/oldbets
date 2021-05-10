@@ -26,6 +26,7 @@ public class Bet implements Serializable{
 	private float bettedAmount;
 	private float possibleRevenue;
 	private boolean result;
+	private boolean paid;
 	
 	public Bet() {
 		super();
@@ -68,4 +69,11 @@ public class Bet implements Serializable{
 		return possibleRevenue;
 	}
 	
+	public void setPaid() {
+		paid = true;
+	}
+	
+	public boolean isPaid() {
+		return paid;
+	}
 }

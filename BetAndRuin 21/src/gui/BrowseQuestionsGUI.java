@@ -134,12 +134,15 @@ public class BrowseQuestionsGUI extends JFrame {
 						option = opt;
 					}
 				}
-				
-				if(!businessLogic.addBetToUser(ev,qu,option,betAmountField.getText())) 
+				if(businessLogic.getBalance()-Integer.parseInt(betAmountField.getText())>=0) {
+				if(!businessLogic.addBetToUser(ev,qu,option,betAmountField.getText())) {
 					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("invalidBetAmount"));
-				else 
+				}
+				else {
 					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("successfulBet"));
-				
+					businessLogic.substractBalance(Integer.parseInt(betAmountField.getText()));
+					}
+				}
 			}
 		});
 		bettingButton.setVisible(false);

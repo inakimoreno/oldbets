@@ -30,7 +30,7 @@ public class User implements Serializable{
 	private boolean isAdmin;
 	
 	private CreditCard creditCard;
-	private Integer balance = 0;
+	private float balance = 0;
 	public User() {
 		super();
 	}
@@ -91,15 +91,15 @@ public class User implements Serializable{
 		this.bets.add(bet);
 	}
 	
-	public void addBalance(Integer balance) {
+	public void addBalance(float balance) {
 		this.balance += balance;
 	}
 	
-	public void substractBalance(Integer balance) {
+	public void substractBalance(float balance) {
 		this.balance -= balance;
 	}
 	
-	public Integer getBalance() {
+	public float getBalance() {
 		return this.balance;
 	}
 	

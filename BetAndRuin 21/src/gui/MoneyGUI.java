@@ -49,7 +49,7 @@ public class MoneyGUI extends JFrame {
 		depositAmount = new JTextField();
 		depositAmount.setColumns(10);
 		
-		balance.setText(Integer.toString(businessLogic.getBalance()));
+		balance.setText(String.valueOf(businessLogic.getBalance()));
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
@@ -89,7 +89,7 @@ public class MoneyGUI extends JFrame {
 					}else {
 
 					}
-					balance.setText(Integer.toString(businessLogic.getBalance()));
+					balance.setText(String.valueOf(businessLogic.getBalance()));
 				}
 			}
 		});

@@ -71,8 +71,7 @@ public class LoginGUI extends JFrame {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logIn();
-				mainGui.loginButton.setVisible(false);
-				mainGui.logOutButton.setVisible(true);
+				
 			}
 		});
 		
@@ -142,10 +141,14 @@ public class LoginGUI extends JFrame {
 			messagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("wrongLogin"));
 		}
 		else {
+			mainGui.loginButton.setVisible(false);
+			mainGui.logOutButton.setVisible(true);
 			businessLogic.setCurrentUser(user);
 			mainGui.registerButton.setVisible(false);
-			if(user.isAdmin())
+			if(user.isAdmin()) {
 				mainGui.createQuestionBtn.setVisible(true);
+				mainGui.setOutcomeButton.setVisible(true);
+			}
 			else
 				mainGui.createQuestionBtn.setVisible(false);
 			mainGui.currentUserLabel.setText(user.getUsername());
