@@ -35,6 +35,8 @@ import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SetOutcomeGUI extends JFrame {
 	
@@ -65,8 +67,8 @@ public class SetOutcomeGUI extends JFrame {
 	
 	private ArrayList<Option> options = new ArrayList<>();
 	private final JButton confirmBtn = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SetOutcomeGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
-	private final JComboBox questionComboBox = new JComboBox();
-	private final JComboBox optionComboBox = new JComboBox();
+	private final JComboBox<Question> questionComboBox = new JComboBox<>();
+	private final JComboBox<Option> optionComboBox = new JComboBox<>();
 	
 	public void setBusinessLogic(BlFacade bl) {
 		businessLogic = bl;		
@@ -97,16 +99,17 @@ public class SetOutcomeGUI extends JFrame {
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(646, 415));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateQuestion"));
+		
 		eventComboBox.addActionListener(new ActionListener	() {
 			public void actionPerformed(ActionEvent e) {
-				questionComboBox.removeAllItems();
+				
 				Event ev = (Event)eventComboBox.getSelectedItem();
-				ArrayList<Question> questions = new ArrayList<>();
-				questionComboBox.setModel(questionModel);
-				questions.addAll(ev.getQuestions());
-					for(Question question:questions) {
-						questionModel.addElement(question);
-					}
+				System.out.println(ev.getQuestions());
+				questionComboBox.removeAllItems();
+				
+				for(Question question:ev.getQuestions()) {
+					questionComboBox.addItem(question);
+				}
 			}
 		});
 
@@ -162,16 +165,21 @@ public class SetOutcomeGUI extends JFrame {
 		confirmBtn.setBounds(94, 336, 117, 29);
 		
 		getContentPane().add(confirmBtn);
+		
 		questionComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				optionComboBox.removeAllItems();
 				Question qu = (Question)questionComboBox.getSelectedItem();
 				ArrayList<Option> options= new ArrayList<>();
-				optionComboBox.setModel(optionModel);
-				options.addAll(qu.getOptions());
-					for(Option option:options) {
-						optionModel.addElement(option);
-					}
+				//System.out.println(qu.getQuestion());
+				//System.out.println(qu.getOptions());
+				//optionComboBox.setModel(optionModel);
+				if(qu!=null) {
+				for(Option option:qu.getOptions()) {
+					optionComboBox.addItem(option);
+				}
+				}
+				optionComboBox.repaint();
 			}
 		});
 		questionComboBox.setBounds(100, 211, 165, 20);
@@ -230,7 +238,7 @@ public class SetOutcomeGUI extends JFrame {
 						System.out.println("Events " + events);
 
 						for (domain.Event ev : events)
-							eventModel.addElement(ev);
+							eventComboBox.addItem(ev);
 						eventComboBox.repaint();
 
 						if (events.size() == 0)

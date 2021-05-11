@@ -258,18 +258,20 @@ public class BlFacadeImplementation implements BlFacade {
 	public void pay() {
 		
 		for(User user:getAllUsers()) {
+			
 			System.out.println(user);
 			for(Bet bet:getBets(user)) {
 				System.out.println("-------------");
 				if(bet.isResult()&&!bet.isPaid()) {
 					dbManager.open(false);
 					System.out.println(user.getBalance());
-					dbManager.addBalance(bet.getPossibleRevenue(), user);
-					System.out.println(user.getBalance());
-					dbManager.setPaid(bet);
+					dbManager.pay(bet,bet.getPossibleRevenue(), user);
+					//dbManager.setPaid(bet);
 					dbManager.close();
+					System.out.println(user.getBalance());
 				}
 			}
+			
 		}
 		
 	}

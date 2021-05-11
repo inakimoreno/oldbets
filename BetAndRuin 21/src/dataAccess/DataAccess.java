@@ -419,6 +419,8 @@ public class DataAccess  {
 		TypedQuery<Bet> bets = db.createQuery("SELECT be FROM Bet be "
 				+ "WHERE be.event.toString() =\""+ev.toString()+"\"AND be.question.toString()=\""+qu.toString()+"\"AND be.option.toString() =\""+opt.toString()+"", Bet.class);
 		List<Bet> result = bets.getResultList();
+		for(Bet bet:result)
+			System.out.println(bet.getBettedAmount());
 		for(Bet bet:result) {
 			bet.setResult(true);
 		}
@@ -446,7 +448,19 @@ public class DataAccess  {
 		User user1 = user.getSingleResult();
 		result = user1.getBets();
 		System.out.println(result);
+		db.getTransaction().commit();
 		return result;
+	}
+	
+	public void pay(Bet bet, float amount, User us) {
+		addBalance(bet.getPossibleRevenue(), us);
+		db.getTransaction().begin();
+
+		TypedQuery<Bet> bets = db.createQuery("SELECT be FROM Bet be "
+				+ "WHERE be.event.toString() =\""+bet.getEvent().toString()+"\"AND be.question.toString()=\""+bet.getQuestion().toString()+"\"AND be.option.toString() =\""+bet.getOption().toString()+"", Bet.class);
+		List<Bet> result = bets.getResultList();
+		bet.setPaid();
+		db.getTransaction().commit();
 	}
 	
 	public void close(){
