@@ -281,10 +281,16 @@ public class BrowseQuestionsGUI extends JFrame {
 							getString("SelectedEvent") + " " + ev.getDescription());
 
 				for (domain.Question q : queries) {
-					Vector<Object> row = new Vector<Object>();
-					row.add(q.getQuestionNumber());
-					row.add(q.getQuestion());
-					questionTableModel.addRow(row);	
+					if(!q.isAnswered()) {
+						Vector<Object> row = new Vector<Object>();
+						row.add(q.getQuestionNumber());
+						row.add(q.getQuestion());
+						questionTableModel.addRow(row);	
+					}
+				}
+				if(questionTableModel.getRowCount()==0) {
+					questionLbl.setText(ResourceBundle.getBundle("Etiquetas").
+							getString("NoQuestions") + ": " + ev.getDescription());
 				}
 				questionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
 				questionTable.getColumnModel().getColumn(1).setPreferredWidth(268);
@@ -387,6 +393,10 @@ public class BrowseQuestionsGUI extends JFrame {
 				ProfileGUI profile = new ProfileGUI(businessLogic, brwGui);
 				brwGui.setEnabled(false);
 				profile.setVisible(true);
+				
+				
+				System.out.println(businessLogic.getCurrentUser().getBets());
+				System.out.println(businessLogic.getCurrentUser().getPastBets());
 			}
 		});
 		

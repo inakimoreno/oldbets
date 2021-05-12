@@ -27,6 +27,7 @@ public class User implements Serializable{
 	private String username;
 	private String password;
 	private ArrayList<Bet> bets;
+	private ArrayList<Bet> pastBets;
 	private boolean isAdmin;
 	
 	private CreditCard creditCard;
@@ -41,6 +42,7 @@ public class User implements Serializable{
 		this.username = username;
 		this.password = password;
 		bets = new ArrayList<Bet>();
+		pastBets = new ArrayList<Bet>();
 		this.isAdmin = isAdmin;
 		this.fullName = fullName;
 		this.email = email;
@@ -105,6 +107,15 @@ public class User implements Serializable{
 	
 	public CreditCard getCreditCard() {
 		return this.creditCard;
+	}
+	
+	public void addPastBet(Bet bet) {
+		this.pastBets.add(bet);
+		this.bets.remove(bet);
+	}
+	
+	public ArrayList<Bet> getPastBets(){
+		return this.pastBets;
 	}
 	
 	@Override

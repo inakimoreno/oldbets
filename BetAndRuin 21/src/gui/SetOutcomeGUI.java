@@ -108,7 +108,8 @@ public class SetOutcomeGUI extends JFrame {
 				questionComboBox.removeAllItems();
 				
 				for(Question question:ev.getQuestions()) {
-					questionComboBox.addItem(question);
+					if(!question.isAnswered())
+						questionComboBox.addItem(question);
 				}
 			}
 		});
@@ -160,6 +161,7 @@ public class SetOutcomeGUI extends JFrame {
 				businessLogic.setOutcome(((Question)questionComboBox.getSelectedItem()), ((Option)optionComboBox.getSelectedItem()));
 				businessLogic.updateBets((Event) eventComboBox.getSelectedItem(), (Question) questionComboBox.getSelectedItem(), (Option)optionComboBox.getSelectedItem());
 				businessLogic.pay();
+				businessLogic.setAnswered((Question)questionComboBox.getSelectedItem());
 			}
 		});
 		confirmBtn.setBounds(94, 336, 117, 29);

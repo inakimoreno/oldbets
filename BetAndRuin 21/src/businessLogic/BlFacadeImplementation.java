@@ -275,6 +275,13 @@ public class BlFacadeImplementation implements BlFacade {
 		}
 		
 	}
+	
+	public void setAnswered(Question qu) {
+		dbManager.open(false);
+		dbManager.setAnswered(qu);
+		dbManager.close();
+	}
+	
 	/**
 	 * This method invokes the data access to initialize the database with some events and questions.
 	 * It is invoked only when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file

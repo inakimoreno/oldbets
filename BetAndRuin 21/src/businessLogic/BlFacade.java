@@ -97,4 +97,7 @@ public interface BlFacade  {
 	
 	
 	@WebMethod public void pay();
+	
+	
+	@WebMethod public void setAnswered(Question qu);
 }
