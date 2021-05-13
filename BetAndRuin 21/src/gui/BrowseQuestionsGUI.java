@@ -144,6 +144,8 @@ public class BrowseQuestionsGUI extends JFrame {
 					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("successfulBet"));
 					businessLogic.substractBalance(Integer.parseInt(betAmountField.getText()), currentUser);
 					}
+				}else {
+					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("notEnoughFunds"));
 				}
 			}
 		});
