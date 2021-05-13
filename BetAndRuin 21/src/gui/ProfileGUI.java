@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import businessLogic.BlFacade;
 import domain.Bet;
+import domain.User;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -35,11 +36,13 @@ public class ProfileGUI extends JFrame {
 	private DefaultTableModel betsTableModel;
 	
 	private BlFacade businessLogic;
+	private User currentUser;
 
 	/**
 	 * Create the frame.
 	 */
-	public ProfileGUI(BlFacade businessLogic, BrowseQuestionsGUI brwGui) {
+	public ProfileGUI(BlFacade businessLogic, BrowseQuestionsGUI brwGui, User currentUser) {
+		this.currentUser = currentUser;
 		ProfileGUI prfGui = this;
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -97,7 +100,7 @@ public class ProfileGUI extends JFrame {
 		JButton WalletButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Wallet"));
 		WalletButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MoneyGUI wallet = new MoneyGUI(businessLogic);
+				MoneyGUI wallet = new MoneyGUI(businessLogic, currentUser);
 				wallet.setVisible(true);
 			}
 		});
@@ -105,7 +108,7 @@ public class ProfileGUI extends JFrame {
 		JButton seePastBets = new JButton(ResourceBundle.getBundle("Etiquetas").getString("pastBetsLabel"));
 		seePastBets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PastBetsGUI pastBetsGui = new PastBetsGUI(businessLogic);
+				PastBetsGUI pastBetsGui = new PastBetsGUI(businessLogic, currentUser);
 				pastBetsGui.setVisible(true);
 			}
 		});
@@ -196,7 +199,7 @@ public class ProfileGUI extends JFrame {
 		ongoingBetsScrollPane.setViewportView(betsTable);
 		contentPane.setLayout(gl_contentPane);
 		
-		ArrayList<Bet> myBets = businessLogic.getBets();
+		ArrayList<Bet> myBets = this.businessLogic.getBets(currentUser);
 		for(Bet b: myBets) {
 			if(!b.getQuestion().isAnswered()) {
 				Vector<Object> bet = new Vector<Object>();
@@ -209,9 +212,9 @@ public class ProfileGUI extends JFrame {
 				System.out.println(bet);
 			}
 		}
-		fullNameTextPane.setText(this.businessLogic.getCurrentUser().getFullName());
-		usernameTextPane.setText(this.businessLogic.getCurrentUser().getUsername());
-		emailTextPane.setText(this.businessLogic.getCurrentUser().getEmail());
+		fullNameTextPane.setText(this.currentUser.getFullName());
+		usernameTextPane.setText(this.currentUser.getUsername());
+		emailTextPane.setText(this.currentUser.getEmail());
 	}
 	private void close() {
 		this.setVisible(false);

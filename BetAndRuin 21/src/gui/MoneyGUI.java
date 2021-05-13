@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BlFacade;
+import domain.User;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -27,12 +28,14 @@ public class MoneyGUI extends JFrame {
 	private JTextField depositAmount;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private BlFacade businessLogic;
+	private User currentUser;
 
 	/**
 	 * Create the frame.
 	 */
-	public MoneyGUI(BlFacade businessLogic) {
+	public MoneyGUI(BlFacade businessLogic, User currentUser) {
 		this.businessLogic = businessLogic;
+		this.currentUser = currentUser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -49,7 +52,7 @@ public class MoneyGUI extends JFrame {
 		depositAmount = new JTextField();
 		depositAmount.setColumns(10);
 		
-		balance.setText(String.valueOf(businessLogic.getBalance()));
+		balance.setText(String.valueOf(this.businessLogic.getBalance(currentUser)));
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
@@ -70,26 +73,26 @@ public class MoneyGUI extends JFrame {
 				if(Integer.parseInt(depositAmount.getText())>0) {
 					if(depositRadioButton.isSelected()) {
 						System.out.println("depositing");
-						if(businessLogic.getCreditCard(businessLogic.getCurrentUser().getCreditCard().getNumber()).getBalance()-Integer.parseInt(depositAmount.getText())>=0) {
+						if(businessLogic.getCreditCard(currentUser.getCreditCard().getNumber()).getBalance()-Integer.parseInt(depositAmount.getText())>=0) {
 							System.out.println("ok");
-							businessLogic.substractMoneyCreditCard(businessLogic.getCurrentUser().getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
-							businessLogic.addBalance(Integer.parseInt(depositAmount.getText()));
+							businessLogic.substractMoneyCreditCard(currentUser.getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
+							businessLogic.addBalance(Integer.parseInt(depositAmount.getText()),currentUser);
 						}else {
 							//error not enough money in bank
 						}
 					}else if(withdrawRadioButton.isSelected()) {
 						System.out.println("withdrawing");
-						if(businessLogic.getBalance()-Integer.parseInt(depositAmount.getText())>=0) {
+						if(businessLogic.getBalance(currentUser)-Integer.parseInt(depositAmount.getText())>=0) {
 							System.out.println("ok");
-							businessLogic.substractBalance(Integer.parseInt(depositAmount.getText()));
-							businessLogic.addMoneyCreditCard(businessLogic.getCurrentUser().getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
+							businessLogic.substractBalance(Integer.parseInt(depositAmount.getText()),currentUser);
+							businessLogic.addMoneyCreditCard(currentUser.getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
 						}else {
 							//error not enough money in balance
 						}
 					}else {
 
 					}
-					balance.setText(String.valueOf(businessLogic.getBalance()));
+					balance.setText(String.valueOf(businessLogic.getBalance(currentUser)));
 				}
 			}
 		});

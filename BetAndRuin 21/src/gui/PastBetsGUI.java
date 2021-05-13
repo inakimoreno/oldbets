@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import businessLogic.BlFacade;
 import domain.Bet;
+import domain.User;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -35,11 +36,13 @@ public class PastBetsGUI extends JFrame {
 	private DefaultTableModel betsTableModel;
 	
 	private BlFacade businessLogic;
+	private User currentUser;
 
 	/**
 	 * Create the frame.
 	 */
-	public PastBetsGUI(BlFacade businessLogic) {
+	public PastBetsGUI(BlFacade businessLogic, User currentUser) {
+		this.currentUser = currentUser;
 		PastBetsGUI prfGui = this;
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -129,7 +132,7 @@ public class PastBetsGUI extends JFrame {
 		ongoingBetsScrollPane.setViewportView(betsTable);
 		contentPane.setLayout(gl_contentPane);
 		
-		ArrayList<Bet> myBets = businessLogic.getBets();
+		ArrayList<Bet> myBets = businessLogic.getBets(currentUser);
 		for(Bet b: myBets) {
 			if(b.getQuestion().isAnswered()) {
 				Vector<Object> bet = new Vector<Object>();

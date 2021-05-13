@@ -134,7 +134,7 @@ public class BlFacadeImplementation implements BlFacade {
 	public void close() {
 		dbManager.close();
 	}
-
+/*
 	@Override
 	@WebMethod
 	public void setCurrentUser(User user) {
@@ -146,10 +146,10 @@ public class BlFacadeImplementation implements BlFacade {
 	public User getCurrentUser() {
 		return currentUser;
 	}
-	
+*/
 	@Override
 	@WebMethod
-	public boolean addBetToUser(Event ev, Question qu, Option option, String amount) {
+	public boolean addBetToUser(User user,Event ev, Question qu, Option option, String amount) {
 		float floatAmount;
 		try {
 		floatAmount = Float.parseFloat(amount);
@@ -161,35 +161,37 @@ public class BlFacadeImplementation implements BlFacade {
 			return false;
 		}
 		dbManager.open(false);
-		dbManager.addBetToUser(currentUser, ev, qu, option, floatAmount);
+		dbManager.addBetToUser(user, ev, qu, option, floatAmount);
 		dbManager.close();
 		return true;
 	}
 	
 	@Override
 	@WebMethod
-	public ArrayList<Bet> getBets(){
+	public ArrayList<Bet> getBets(User user){
 		ArrayList<Bet> bets = new ArrayList<Bet>();
 		dbManager.open(false);
-		User usr = dbManager.getUser(this.currentUser.getUsername(), this.currentUser.getPassword());
-		bets = (ArrayList<Bet>) usr.getBets().clone();
+		User usr = dbManager.getUser(user.getUsername(), user.getPassword());
+		if(!usr.getBets().isEmpty())
+			bets = (ArrayList<Bet>) usr.getBets().clone();
+		
 		dbManager.close();
 		return bets;
 	}
 	
 	@Override
 	@WebMethod
-	public void addBalance(float amount) {
+	public void addBalance(float amount, User user) {
 		dbManager.open(false);
-		dbManager.addBalance(amount, this.currentUser);
+		dbManager.addBalance(amount, user);
 		dbManager.close();
 	}
 	
 	@Override
 	@WebMethod
-	public void substractBalance(float amount) {
+	public void substractBalance(float amount, User user) {
 		dbManager.open(false);
-		dbManager.substractBalance(amount, this.currentUser);
+		dbManager.substractBalance(amount, user);
 		dbManager.close();
 	}
 	
@@ -204,9 +206,9 @@ public class BlFacadeImplementation implements BlFacade {
 	
 	@Override
 	@WebMethod
-	public float getBalance() {
+	public float getBalance(User user) {
 		dbManager.open(false);
-		float balance = dbManager.getBalance(this.currentUser);
+		float balance = dbManager.getBalance(user);
 		dbManager.close();
 		return balance;
 	}

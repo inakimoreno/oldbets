@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 
 import businessLogic.BlFacade;
 import domain.Event;
-
+import domain.User;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -35,6 +35,7 @@ public class MainGUI extends JFrame {
 	private JButton browseQuestionsBtn;
 	JButton createQuestionBtn;
 	JButton setOutcomeButton;
+	private User currentUser;
 	private JPanel localePane;
 	private JRadioButton euskaraRbtn;
 	private JRadioButton castellanoRbtn;
@@ -53,6 +54,9 @@ public class MainGUI extends JFrame {
 		businessLogic = afi;
 	}
 
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
 
 	public MainGUI() {
 		super();
@@ -103,7 +107,7 @@ public class MainGUI extends JFrame {
 		logOutButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("logOut")); //$NON-NLS-1$ //$NON-NLS-2$
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.setCurrentUser(null);
+				//businessLogic.setCurrentUser(null);
 				currentUserLabel.setText("Guest");
 				logOutButton.setVisible(false);
 				loginButton.setVisible(true);
@@ -194,7 +198,7 @@ public class MainGUI extends JFrame {
 		browseQuestionsBtn.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, mainGui);
+				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, mainGui, currentUser);
 				findQuestionsWindow.setBusinessLogic(businessLogic);
 				mainGui.setEnabled(false);
 				findQuestionsWindow.setVisible(true);
