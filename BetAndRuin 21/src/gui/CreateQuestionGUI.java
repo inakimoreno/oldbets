@@ -314,9 +314,14 @@ public class CreateQuestionGUI extends JFrame {
 				if (inputPrice <= 0)
 					errorLbl.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorNumber"));
 				else {
-					businessLogic.createQuestion(event, inputQuestion, inputPrice, options);
-					options.clear();
-					msgLbl.setText(ResourceBundle.getBundle("Etiquetas").getString("QuestionCreated"));
+					if(!options.isEmpty()) {
+						businessLogic.createQuestion(event, inputQuestion, inputPrice, options);
+						options.clear();
+						msgLbl.setText(ResourceBundle.getBundle("Etiquetas").getString("QuestionCreated"));
+					}else {
+						msgLbl.setText(ResourceBundle.getBundle("Etiquetas").getString("OptionsEmpty"));
+					}
+					
 				}
 			} else
 				msgLbl.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorQuestion"));
