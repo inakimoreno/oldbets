@@ -14,7 +14,9 @@ import domain.Event;
 import domain.Option;
 import domain.Question;
 import domain.User;
+import exceptions.EventAlreadyExists;
 import exceptions.EventFinished;
+import exceptions.PastDate;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
 
@@ -37,6 +39,9 @@ public interface BlFacade  {
 	@WebMethod
 	Question createQuestion(Event event, String question, float betMinimum, ArrayList<Option> options) 
 			throws EventFinished, QuestionAlreadyExist;
+	
+	@WebMethod
+	public void createEvent(String eventName, Date date) throws PastDate, EventAlreadyExists;
 		
 	/**
 	 * This method retrieves all the events of a given date 

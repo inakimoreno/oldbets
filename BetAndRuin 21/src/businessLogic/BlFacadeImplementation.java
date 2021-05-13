@@ -18,7 +18,9 @@ import domain.User;
 import domain.Option;
 import domain.Bet;
 import domain.CreditCard;
+import exceptions.EventAlreadyExists;
 import exceptions.EventFinished;
+import exceptions.PastDate;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
 
@@ -80,6 +82,17 @@ public class BlFacadeImplementation implements BlFacade {
 		qry = dbManager.createQuestion(event, question, betMinimum, options);		
 		dbManager.close();
 		return qry;
+	}
+	
+	@Override
+	@WebMethod
+	public void createEvent(String eventName, Date date) throws PastDate, EventAlreadyExists {
+		dbManager.open(false);
+		if(new Date().compareTo(date)>0)
+			throw new PastDate(ResourceBundle.getBundle("Etiquetas").
+					getString("ErrorPastDate"));
+		dbManager.createEvent(eventName, date);
+		dbManager.close();
 	}
 
 	/**

@@ -36,6 +36,7 @@ public class MainGUI extends JFrame {
 	JButton createQuestionBtn;
 	JButton setOutcomeButton;
 	private User currentUser;
+	JButton createEventBtn;
 	private JPanel localePane;
 	private JRadioButton euskaraRbtn;
 	private JRadioButton castellanoRbtn;
@@ -92,7 +93,7 @@ public class MainGUI extends JFrame {
 				loginGUI.setVisible(true);
 			}
 		});
-		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("registerButton")); //$NON-NLS-1$ //$NON-NLS-2$
+		registerButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("registerButton")); 
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RegisterGUI registerGUI = new RegisterGUI(businessLogic, mainGui);
@@ -104,16 +105,18 @@ public class MainGUI extends JFrame {
 		currentUserLabel = new JLabel();
 		currentUserLabel.setText(ResourceBundle.getBundle("Etiquetas").getString("usernameLabel"));
 		
-		logOutButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("logOut")); //$NON-NLS-1$ //$NON-NLS-2$
+		logOutButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("logOut"));
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//businessLogic.setCurrentUser(null);
+				setCurrentUser(null);
 				currentUserLabel.setText("Guest");
 				logOutButton.setVisible(false);
 				loginButton.setVisible(true);
 				registerButton.setVisible(true);
 				createQuestionBtn.setVisible(false);
 				setOutcomeButton.setVisible(false);
+				createEventBtn.setVisible(false);
 			}
 		});
 		logOutButton.setVisible(false);
@@ -144,6 +147,7 @@ public class MainGUI extends JFrame {
 					.addComponent(localePane, GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
 					.addContainerGap())
 				.addComponent(setOutcomeButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+				.addComponent(createEventBtn, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
 		);
 		gl_mainPane.setVerticalGroup(
 			gl_mainPane.createParallelGroup(Alignment.LEADING)
@@ -163,7 +167,8 @@ public class MainGUI extends JFrame {
 					.addComponent(createQuestionBtn, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(setOutcomeButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(createEventBtn, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					.addComponent(localePane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(33))
 		);
@@ -186,6 +191,7 @@ public class MainGUI extends JFrame {
 		
 		initializeBrowseQuestionsBtn(mainGui);
 		initializeCreateQuestionBtn(mainGui);
+		initializeCreateEventBtn(mainGui);
 
 		initializeLocalePane();
 	}
@@ -219,6 +225,22 @@ public class MainGUI extends JFrame {
 				mainGui.setEnabled(false);
 				createQuestionWindow.setBusinessLogic(businessLogic);
 				createQuestionWindow.setVisible(true);
+			}
+		});
+	}
+	
+	private void initializeCreateEventBtn(MainGUI mainGui) {
+		createEventBtn = new JButton();
+		createEventBtn.setVisible(false);
+		createEventBtn.setText(ResourceBundle.getBundle("Etiquetas").
+				getString("CreateEvent"));
+		createEventBtn.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				CreateEventGUI createEventWindow = new CreateEventGUI(businessLogic,new Vector<>() , mainGui);
+				mainGui.setEnabled(false);
+				createEventWindow.setBusinessLogic(businessLogic);
+				createEventWindow.setVisible(true);
 			}
 		});
 	}
@@ -281,6 +303,8 @@ public class MainGUI extends JFrame {
 				getString("BrowseQuestions"));
 		createQuestionBtn.setText(ResourceBundle.getBundle("Etiquetas").
 				getString("CreateQuestion"));
+		createEventBtn.setText(ResourceBundle.getBundle("Etiquetas").
+				getString("CreateEvent"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 	}
 }
