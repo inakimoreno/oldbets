@@ -25,6 +25,7 @@ public class Question implements Serializable {
 	private String question; 
 	private float betMinimum;
 	private Option outcome; 
+	private boolean answered;
 	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private ArrayList<Option> options = new ArrayList<Option>();
 
@@ -151,7 +152,13 @@ public class Question implements Serializable {
 		return options;
 	}
 	
+	public void setAnswered() {
+		answered = true;
+	}
 	
+	public boolean isAnswered() {
+		return this.answered;
+	}
 	
 	
 	@Override

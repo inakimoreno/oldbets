@@ -2,6 +2,7 @@ package businessLogic;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import javax.jws.WebMethod;
@@ -59,17 +60,17 @@ public interface BlFacade  {
 	
 	@WebMethod public User getUser(String username, String password);
 	
-	
+	/*
 	@WebMethod public void setCurrentUser(User currentUser);
 	
 	
 	@WebMethod public User getCurrentUser();
+	*/
+	
+	@WebMethod public boolean addBetToUser(User user,Event ev, Question qu, Option option, String amount);
 	
 	
-	@WebMethod public boolean addBetToUser(Event ev, Question qu, Option option, String amount);
-	
-	
-	@WebMethod public ArrayList<Bet> getBets();
+	@WebMethod public ArrayList<Bet> getBets(User user);
 	
 	
 	@WebMethod public CreditCard getCreditCard(String cardNumber);
@@ -81,13 +82,13 @@ public interface BlFacade  {
 	@WebMethod public void substractMoneyCreditCard(String cardNumber, float amount);
 	
 	
-	@WebMethod public void addBalance(float amount);
+	@WebMethod public void addBalance(float amount,User user);
 	
 	
-	@WebMethod public void substractBalance(float amount);
+	@WebMethod public void substractBalance(float amount,User user);
 	
 	
-	@WebMethod public float getBalance();
+	@WebMethod public float getBalance(User user);
 	
 	
 	@WebMethod public void setOutcome(Question qu, Option opt);
@@ -97,4 +98,13 @@ public interface BlFacade  {
 	
 	
 	@WebMethod public void pay();
+	
+	
+	@WebMethod public void setAnswered(Question qu);
+	
+	
+	@WebMethod public List<User> getAllUsers();
+	
+	
+	@WebMethod public List<Bet> getBetsUser(User user);
 }

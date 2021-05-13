@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BlFacade;
+import domain.User;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,7 +20,10 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import java.awt.SystemColor;
 
 public class MoneyGUI extends JFrame {
 
@@ -27,12 +31,15 @@ public class MoneyGUI extends JFrame {
 	private JTextField depositAmount;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private BlFacade businessLogic;
+	private User currentUser;
 
+	JTextPane alertTextPane;
 	/**
 	 * Create the frame.
 	 */
-	public MoneyGUI(BlFacade businessLogic) {
+	public MoneyGUI(BlFacade businessLogic, User currentUser) {
 		this.businessLogic = businessLogic;
+		this.currentUser = currentUser;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -49,7 +56,7 @@ public class MoneyGUI extends JFrame {
 		depositAmount = new JTextField();
 		depositAmount.setColumns(10);
 		
-		balance.setText(String.valueOf(businessLogic.getBalance()));
+		balance.setText(String.valueOf(this.businessLogic.getBalance(currentUser)));
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
@@ -70,57 +77,65 @@ public class MoneyGUI extends JFrame {
 				if(Integer.parseInt(depositAmount.getText())>0) {
 					if(depositRadioButton.isSelected()) {
 						System.out.println("depositing");
-						if(businessLogic.getCreditCard(businessLogic.getCurrentUser().getCreditCard().getNumber()).getBalance()-Integer.parseInt(depositAmount.getText())>=0) {
-							System.out.println("ok");
-							businessLogic.substractMoneyCreditCard(businessLogic.getCurrentUser().getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
-							businessLogic.addBalance(Integer.parseInt(depositAmount.getText()));
+						if(businessLogic.getCreditCard(currentUser.getCreditCard().getNumber()).getBalance()-Integer.parseInt(depositAmount.getText())>=0) {
+							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("moneyDepositedWallet"));
+							businessLogic.substractMoneyCreditCard(currentUser.getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
+							businessLogic.addBalance(Integer.parseInt(depositAmount.getText()),currentUser);
 						}else {
 							//error not enough money in bank
+							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("notEnoughFundsBank"));
 						}
 					}else if(withdrawRadioButton.isSelected()) {
 						System.out.println("withdrawing");
-						if(businessLogic.getBalance()-Integer.parseInt(depositAmount.getText())>=0) {
-							System.out.println("ok");
-							businessLogic.substractBalance(Integer.parseInt(depositAmount.getText()));
-							businessLogic.addMoneyCreditCard(businessLogic.getCurrentUser().getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
+						if(businessLogic.getBalance(currentUser)-Integer.parseInt(depositAmount.getText())>=0) {
+							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("moneyDepositedBank"));
+							businessLogic.substractBalance(Integer.parseInt(depositAmount.getText()),currentUser);
+							businessLogic.addMoneyCreditCard(currentUser.getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
 						}else {
 							//error not enough money in balance
+							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("notEnoughFundsWallet"));
 						}
 					}else {
 
 					}
-					balance.setText(String.valueOf(businessLogic.getBalance()));
+					balance.setText(String.valueOf(businessLogic.getBalance(currentUser)));
 				}
 			}
 		});
 		
+		alertTextPane = new JTextPane();
+		alertTextPane.setBackground(SystemColor.menu);
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(depositRadioButton)
 								.addComponent(balanceLabel))
-							.addPreferredGap(ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(balance)
 								.addComponent(withdrawRadioButton))
 							.addGap(39)
 							.addComponent(depositAmount, 92, 92, 92))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(62)
-							.addComponent(cancelButton)
-							.addPreferredGap(ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-							.addComponent(doneButton)
-							.addGap(56)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(alertTextPane, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(cancelButton)
+									.addPreferredGap(ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+									.addComponent(doneButton)
+									.addGap(56)))))
 					.addGap(84))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(170)
 					.addComponent(title)
-					.addContainerGap(279, Short.MAX_VALUE))
+					.addContainerGap(180, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -136,7 +151,9 @@ public class MoneyGUI extends JFrame {
 						.addComponent(depositAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(depositRadioButton)
 						.addComponent(withdrawRadioButton))
-					.addGap(59)
+					.addGap(21)
+					.addComponent(alertTextPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(cancelButton)
 						.addComponent(doneButton))

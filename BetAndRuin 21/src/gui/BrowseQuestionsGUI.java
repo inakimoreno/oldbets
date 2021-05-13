@@ -46,6 +46,7 @@ public class BrowseQuestionsGUI extends JFrame {
 
 	private BlFacade businessLogic;
 
+	private User currentUser;
 	private final JLabel eventDateLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").
 			getString("EventDate"));
 	private final JLabel questionLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").
@@ -102,7 +103,8 @@ public class BrowseQuestionsGUI extends JFrame {
 	}
 
 
-	public BrowseQuestionsGUI(BlFacade bl, MainGUI mainGui) {
+	public BrowseQuestionsGUI(BlFacade bl, MainGUI mainGui, User currentUser) {
+		this.currentUser = currentUser;
 		BrowseQuestionsGUI brwGui = this;
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -134,20 +136,22 @@ public class BrowseQuestionsGUI extends JFrame {
 						option = opt;
 					}
 				}
-				if(businessLogic.getBalance()-Integer.parseInt(betAmountField.getText())>=0) {
-				if(!businessLogic.addBetToUser(ev,qu,option,betAmountField.getText())) {
+				if(businessLogic.getBalance(currentUser)-Integer.parseInt(betAmountField.getText())>=0) {
+				if(!businessLogic.addBetToUser(currentUser,ev,qu,option,betAmountField.getText())) {
 					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("invalidBetAmount"));
 				}
 				else {
 					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("successfulBet"));
-					businessLogic.substractBalance(Integer.parseInt(betAmountField.getText()));
+					businessLogic.substractBalance(Integer.parseInt(betAmountField.getText()), currentUser);
 					}
+				}else {
+					betMessagePane.setText(ResourceBundle.getBundle("Etiquetas").getString("notEnoughFunds"));
 				}
 			}
 		});
 		bettingButton.setVisible(false);
-		if(businessLogic.getCurrentUser()!=null) {
-			usernameLabel.setText(businessLogic.getCurrentUser().getUsername());
+		if(currentUser!=null) {
+			usernameLabel.setText(currentUser.getUsername());
 		}
 		try {
 			jbInit(mainGui, brwGui);
@@ -281,10 +285,16 @@ public class BrowseQuestionsGUI extends JFrame {
 							getString("SelectedEvent") + " " + ev.getDescription());
 
 				for (domain.Question q : queries) {
-					Vector<Object> row = new Vector<Object>();
-					row.add(q.getQuestionNumber());
-					row.add(q.getQuestion());
-					questionTableModel.addRow(row);	
+					if(!q.isAnswered()) {
+						Vector<Object> row = new Vector<Object>();
+						row.add(q.getQuestionNumber());
+						row.add(q.getQuestion());
+						questionTableModel.addRow(row);	
+					}
+				}
+				if(questionTableModel.getRowCount()==0) {
+					questionLbl.setText(ResourceBundle.getBundle("Etiquetas").
+							getString("NoQuestions") + ": " + ev.getDescription());
 				}
 				questionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
 				questionTable.getColumnModel().getColumn(1).setPreferredWidth(268);
@@ -340,7 +350,7 @@ public class BrowseQuestionsGUI extends JFrame {
 				
 				//bettingOptionsLabel.setVisible(true);
 				
-				if(businessLogic.getCurrentUser()!=null) {
+				if(currentUser!=null) {
 					bettingButton.setEnabled(true);
 					betAmountField.setVisible(true);
 					betLabel.setVisible(true);
@@ -384,16 +394,20 @@ public class BrowseQuestionsGUI extends JFrame {
 		getContentPane().add(betMessagePane);
 		profileButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ProfileGUI profile = new ProfileGUI(businessLogic, brwGui);
+				ProfileGUI profile = new ProfileGUI(businessLogic, brwGui, currentUser);
 				brwGui.setEnabled(false);
 				profile.setVisible(true);
+				
+				
+				System.out.println(currentUser.getBets());
+				System.out.println(currentUser.getPastBets());
 			}
 		});
 		
 		
 		profileButton.setBounds(519, 16, 119, 23);
 		profileButton.setVisible(false);
-		if(businessLogic.getCurrentUser()!=null)
+		if(currentUser!=null)
 			profileButton.setVisible(true);
 		getContentPane().add(profileButton);
 		

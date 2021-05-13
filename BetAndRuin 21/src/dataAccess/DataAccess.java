@@ -432,11 +432,11 @@ public class DataAccess  {
 	public void setPaid(Bet bet) {
 		db.getTransaction().begin();
 		TypedQuery<Bet> bets = db.createQuery("SELECT be FROM Bet be "
-				+ "WHERE be.event.toString() =\""+bet.getEvent().toString()+"\"AND be.question.toString()=\""+bet.getQuestion().toString()+"\"AND be.option.toString() =\""+bet.getOption().toString()+"", Bet.class);
-		List<Bet> result = bets.getResultList();
-		for(Bet bet1:result) {
-			bet1.setPaid();
-		}
+				+ "WHERE be.betNumber.toString() =\""+bet.getBetNumber().toString()+"", Bet.class);
+		Bet result = bets.getSingleResult();
+		
+		result.setPaid();
+		
 		db.getTransaction().commit();
 	}
 	
@@ -455,11 +455,21 @@ public class DataAccess  {
 	public void pay(Bet bet, float amount, User us) {
 		addBalance(bet.getPossibleRevenue(), us);
 		db.getTransaction().begin();
-
-		TypedQuery<Bet> bets = db.createQuery("SELECT be FROM Bet be "
-				+ "WHERE be.event.toString() =\""+bet.getEvent().toString()+"\"AND be.question.toString()=\""+bet.getQuestion().toString()+"\"AND be.option.toString() =\""+bet.getOption().toString()+"", Bet.class);
-		List<Bet> result = bets.getResultList();
-		bet.setPaid();
+		User user = this.getUser(us.getUsername(), us.getPassword());
+		
+		
+		user.addPastBet(bet);
+		
+		db.getTransaction().commit();
+		setPaid(bet);
+	}
+	
+	public void setAnswered(Question qu) {
+		db.getTransaction().begin();
+		TypedQuery<Question> question = db.createQuery("SELECT qu FROM Question qu "
+				+ "WHERE qu.questionNumber.toString() =\""+qu.getQuestionNumber().toString()+"\"", Question.class);
+		Question quest = question.getSingleResult();
+		quest.setAnswered();
 		db.getTransaction().commit();
 	}
 	

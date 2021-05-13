@@ -76,4 +76,12 @@ public class Bet implements Serializable{
 	public boolean isPaid() {
 		return paid;
 	}
+	
+	public Integer getBetNumber() {
+		return this.betNumber;
+	}
+	
+	public boolean getResult() {
+		return this.result;
+	}
 }
