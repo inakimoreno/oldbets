@@ -24,6 +24,7 @@ import domain.Event;
 import domain.Option;
 import domain.Question;
 import domain.User;
+import exceptions.EventAlreadyExists;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
 
@@ -130,7 +131,7 @@ public class DataAccess  {
 			db.persist(q5);
 			db.persist(q6);
 			 */
-			db.persist(ev1);
+			/*db.persist(ev1);
 			db.persist(ev2);
 			db.persist(ev3);
 			db.persist(ev4);
@@ -149,7 +150,7 @@ public class DataAccess  {
 			db.persist(ev17);
 			db.persist(ev18);
 			db.persist(ev19);
-			db.persist(ev20);			
+			db.persist(ev20);*/
 
 			db.getTransaction().commit();
 			System.out.println("The database has been initialized");
@@ -187,6 +188,25 @@ public class DataAccess  {
 		return q;
 	}
 
+	public void createEvent(String eventName, Date date) throws EventAlreadyExists{
+		Vector<Event> eventList = getEvents(date);
+		for(Event ev: eventList) {
+			if(ev.getDescription().equals(eventName))
+				throw new EventAlreadyExists(ResourceBundle.getBundle("Etiquetas").getString("ErrorEventAlreadyExists"));
+		}
+		
+		/*int year = date.getYear();
+		int month = date.getMonth();
+		int day = date.getDay();
+		System.out.println(day);
+		date = UtilDate.newDate(year + 1900 , month, day);*/
+		db.getTransaction().begin();
+		Event ev = new Event(eventName, date);
+		db.persist(ev);
+		db.getTransaction().commit();
+		
+	}
+	
 	/**
 	 * This method retrieves from the database the events of a given date 
 	 * 
