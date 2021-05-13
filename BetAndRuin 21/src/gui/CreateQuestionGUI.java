@@ -171,10 +171,12 @@ public class CreateQuestionGUI extends JFrame {
 		addOptionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				/////////////////////////////////////
-				Option opt = new Option(optionTextField.getText(), Float.parseFloat(returnRateTextField.getText()));
-				options.add(opt);
-				optionTextField.setText("");
-				returnRateTextField.setText("");
+				if(Float.parseFloat(returnRateTextField.getText())>1) {
+					Option opt = new Option(optionTextField.getText(), Float.parseFloat(returnRateTextField.getText()));
+					options.add(opt);
+					optionTextField.setText("");
+					returnRateTextField.setText("");
+				}
 			}
 		});
 		addOptionButton.setBounds(368, 301, 117, 23);
