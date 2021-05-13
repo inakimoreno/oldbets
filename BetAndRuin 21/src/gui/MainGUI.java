@@ -85,7 +85,8 @@ public class MainGUI extends JFrame {
 		
 		
 		
-		loginButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("login"));
+		loginButton = new JButton();
+		loginButton.setText(ResourceBundle.getBundle("Etiquetas").getString("login"));
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LoginGUI loginGUI = new LoginGUI(businessLogic, mainGui);
@@ -125,6 +126,7 @@ public class MainGUI extends JFrame {
 		setOutcomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SetOutcomeGUI setOutcomeGui = new SetOutcomeGUI(businessLogic,new Vector<Event>(),mainGui);
+				mainGui.setEnabled(false);
 				setOutcomeGui.setVisible(true);
 			}
 		});

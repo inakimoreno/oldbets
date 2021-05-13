@@ -100,7 +100,8 @@ public class ProfileGUI extends JFrame {
 		JButton WalletButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Wallet"));
 		WalletButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MoneyGUI wallet = new MoneyGUI(businessLogic, currentUser);
+				MoneyGUI wallet = new MoneyGUI(businessLogic, currentUser, prfGui);
+				prfGui.setEnabled(false);
 				wallet.setVisible(true);
 			}
 		});
@@ -108,7 +109,8 @@ public class ProfileGUI extends JFrame {
 		JButton seePastBets = new JButton(ResourceBundle.getBundle("Etiquetas").getString("pastBetsLabel"));
 		seePastBets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PastBetsGUI pastBetsGui = new PastBetsGUI(businessLogic, currentUser);
+				PastBetsGUI pastBetsGui = new PastBetsGUI(businessLogic, currentUser, prfGui);
+				prfGui.setEnabled(false);
 				pastBetsGui.setVisible(true);
 			}
 		});

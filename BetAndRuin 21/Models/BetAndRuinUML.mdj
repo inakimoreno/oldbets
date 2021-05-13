@@ -4265,6 +4265,284 @@
 							"propertyLabel": {
 								"$ref": "AAAAAAF5ZXpXQ0QiqbI="
 							}
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAF5Zj4mxACXYqI=",
+							"_parent": {
+								"$ref": "AAAAAAFFxl9JTz9kpKI="
+							},
+							"model": {
+								"$ref": "AAAAAAF5Zj4mwwCVfa4="
+							},
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAF5Zj4mxACYzec=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj4mxACXYqI="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj4mwwCVfa4="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF5Zj4mxACZSJE=",
+											"_parent": {
+												"$ref": "AAAAAAF5Zj4mxACYzec="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF5Zj4mxACa+G8=",
+											"_parent": {
+												"$ref": "AAAAAAF5Zj4mxACYzec="
+											},
+											"font": "Arial;13;1",
+											"left": 244.5,
+											"top": 162,
+											"width": 103,
+											"height": 13,
+											"text": "Bet History"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF5Zj4mxACb1CI=",
+											"_parent": {
+												"$ref": "AAAAAAF5Zj4mxACYzec="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"width": 126.90234375,
+											"height": 13,
+											"text": "(from Use Case View)"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAF5Zj4mxACcKrk=",
+											"_parent": {
+												"$ref": "AAAAAAF5Zj4mxACYzec="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"height": 13,
+											"horizontalAlignment": 1
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 239.5,
+									"top": 155,
+									"width": 113,
+									"height": 25,
+									"stereotypeLabel": {
+										"$ref": "AAAAAAF5Zj4mxACZSJE="
+									},
+									"nameLabel": {
+										"$ref": "AAAAAAF5Zj4mxACa+G8="
+									},
+									"namespaceLabel": {
+										"$ref": "AAAAAAF5Zj4mxACb1CI="
+									},
+									"propertyLabel": {
+										"$ref": "AAAAAAF5Zj4mxACcKrk="
+									}
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAF5Zj4mxQCdaDc=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj4mxACXYqI="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj4mwwCVfa4="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAF5Zj4mxQCeHPI=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj4mxACXYqI="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj4mwwCVfa4="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLReceptionCompartmentView",
+									"_id": "AAAAAAF5Zj4mxQCfmbc=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj4mxACXYqI="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj4mwwCVfa4="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLTemplateParameterCompartmentView",
+									"_id": "AAAAAAF5Zj4mxQCgb90=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj4mxACXYqI="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj4mwwCVfa4="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLExtensionPointCompartmentView",
+									"_id": "AAAAAAF5Zj4mxQCh1FY=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj4mxACXYqI="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj4mwwCVfa4="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"width": 10,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"containerChangeable": true,
+							"left": 216,
+							"top": 136,
+							"width": 160,
+							"height": 64,
+							"nameCompartment": {
+								"$ref": "AAAAAAF5Zj4mxACYzec="
+							},
+							"suppressAttributes": true,
+							"suppressOperations": true,
+							"attributeCompartment": {
+								"$ref": "AAAAAAF5Zj4mxQCdaDc="
+							},
+							"operationCompartment": {
+								"$ref": "AAAAAAF5Zj4mxQCeHPI="
+							},
+							"receptionCompartment": {
+								"$ref": "AAAAAAF5Zj4mxQCfmbc="
+							},
+							"templateParameterCompartment": {
+								"$ref": "AAAAAAF5Zj4mxQCgb90="
+							},
+							"extensionPointCompartment": {
+								"$ref": "AAAAAAF5Zj4mxQCh1FY="
+							}
+						},
+						{
+							"_type": "UMLExtendView",
+							"_id": "AAAAAAF5Zj5vcQFM2nw=",
+							"_parent": {
+								"$ref": "AAAAAAFFxl9JTz9kpKI="
+							},
+							"model": {
+								"$ref": "AAAAAAF5Zj5vcQFKC6M="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF5Zj5vcQFNSWU=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj5vcQFM2nw="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj5vcQFKC6M="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 401,
+									"top": 199,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF5Zj5vcQFM2nw="
+									},
+									"edgePosition": 1
+								},
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF5Zj5vcQFOWbw=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj5vcQFM2nw="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj5vcQFKC6M="
+									},
+									"font": "Arial;13;0",
+									"left": 382,
+									"top": 186,
+									"width": 53.49169921875,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 30,
+									"hostEdge": {
+										"$ref": "AAAAAAF5Zj5vcQFM2nw="
+									},
+									"edgePosition": 1,
+									"text": "«extend»"
+								},
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF5Zj5vcgFP8qI=",
+									"_parent": {
+										"$ref": "AAAAAAF5Zj5vcQFM2nw="
+									},
+									"model": {
+										"$ref": "AAAAAAF5Zj5vcQFKC6M="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 388,
+									"top": 226,
+									"height": 13,
+									"alpha": -1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF5Zj5vcQFM2nw="
+									},
+									"edgePosition": 1
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAF5W/QZMpM3ef0="
+							},
+							"tail": {
+								"$ref": "AAAAAAF5Zj4mxACXYqI="
+							},
+							"lineStyle": 1,
+							"points": "358:200;433:239",
+							"showVisibility": true,
+							"nameLabel": {
+								"$ref": "AAAAAAF5Zj5vcQFNSWU="
+							},
+							"stereotypeLabel": {
+								"$ref": "AAAAAAF5Zj5vcQFOWbw="
+							},
+							"propertyLabel": {
+								"$ref": "AAAAAAF5Zj5vcgFP8qI="
+							}
 						}
 					]
 				},
@@ -4610,6 +4888,30 @@
 						}
 					],
 					"documentation": "#Flow of events\n\n##Basic Flow\n1. *User* provides the amount of money they want to withdraw\n2. *System* checks thath the *User* has that amount on the wallet\n3. *System* withdraws the money to the cresit card\n\n##Alternative Flow\n* **2a** *User* does not have enough money on the wallet. **GO TO 1**\n\n##Precondition\n* *User* must be **logged in**"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAF5Zj4mwwCVfa4=",
+					"_parent": {
+						"$ref": "AAAAAAFFxl38KT9O4MM="
+					},
+					"name": "Bet History",
+					"ownedElements": [
+						{
+							"_type": "UMLExtend",
+							"_id": "AAAAAAF5Zj5vcQFKC6M=",
+							"_parent": {
+								"$ref": "AAAAAAF5Zj4mwwCVfa4="
+							},
+							"source": {
+								"$ref": "AAAAAAF5Zj4mwwCVfa4="
+							},
+							"target": {
+								"$ref": "AAAAAAF5W/QZMpM17j0="
+							}
+						}
+					],
+					"documentation": "#Flow of events\n\n##Basic Flow\n1. *System* displys the bets of the *User* that have an outcome\n\n##Precondition\n* *User* must be **logged in**"
 				}
 			]
 		},

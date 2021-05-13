@@ -41,15 +41,13 @@ public class PastBetsGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PastBetsGUI(BlFacade businessLogic, User currentUser) {
+	public PastBetsGUI(BlFacade businessLogic, User currentUser, ProfileGUI prfGui) {
 		this.currentUser = currentUser;
-		PastBetsGUI prfGui = this;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				//brwGui.setEnabled(true);
-				prfGui.setVisible(false);
-			
+				prfGui.setEnabled(true);
+				close();
 			}
 		});
 
@@ -71,7 +69,7 @@ public class PastBetsGUI extends JFrame {
 		JButton closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//brwGui.setEnabled(true);
+				prfGui.setEnabled(true);
 				close();
 			}
 		});

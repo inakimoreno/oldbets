@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MoneyGUI extends JFrame {
 
@@ -37,10 +39,17 @@ public class MoneyGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MoneyGUI(BlFacade businessLogic, User currentUser) {
+	public MoneyGUI(BlFacade businessLogic, User currentUser, ProfileGUI prfGui) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				prfGui.setEnabled(true);
+				close();
+			}
+		});
 		this.businessLogic = businessLogic;
 		this.currentUser = currentUser;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,6 +70,7 @@ public class MoneyGUI extends JFrame {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				prfGui.setEnabled(true);
 				close();
 			}
 		});
