@@ -2,6 +2,7 @@ package businessLogic;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import javax.jws.WebMethod;
@@ -100,4 +101,10 @@ public interface BlFacade  {
 	
 	
 	@WebMethod public void setAnswered(Question qu);
+	
+	
+	@WebMethod public List<User> getAllUsers();
+	
+	
+	@WebMethod public List<Bet> getBetsUser(User user);
 }

@@ -80,4 +80,8 @@ public class Bet implements Serializable{
 	public Integer getBetNumber() {
 		return this.betNumber;
 	}
+	
+	public boolean getResult() {
+		return this.result;
+	}
 }

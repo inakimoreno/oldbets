@@ -235,12 +235,16 @@ public class BlFacadeImplementation implements BlFacade {
 		dbManager.close();
 	}
 	
+	@Override
+	@WebMethod
 	public void updateBets(Event ev, Question qu, Option opt) {
 		dbManager.open(false);
 		dbManager.updateBets(ev, qu, opt);
 		dbManager.close();
 	}
 	
+	@Override
+	@WebMethod
 	public List<User> getAllUsers(){
 		dbManager.open(false);
 		List<User> result = dbManager.getAllUsers();
@@ -248,19 +252,23 @@ public class BlFacadeImplementation implements BlFacade {
 		return result;
 	}
 	
-	public List<Bet> getBets(User user){
+	@Override
+	@WebMethod
+	public List<Bet> getBetsUser(User user){
 		dbManager.open(false);
 		List<Bet> result = dbManager.getBets(user);
 		dbManager.close();
 		return result;
 	}
 	
+	@Override
+	@WebMethod
 	public void pay() {
 		
 		for(User user:getAllUsers()) {
 			
 			System.out.println(user);
-			for(Bet bet:getBets(user)) {
+			for(Bet bet:getBetsUser(user)) {
 				System.out.println("-------------");
 				if(bet.isResult()&&!bet.isPaid()) {
 					dbManager.open(false);
@@ -276,6 +284,8 @@ public class BlFacadeImplementation implements BlFacade {
 		
 	}
 	
+	@Override
+	@WebMethod
 	public void setAnswered(Question qu) {
 		dbManager.open(false);
 		dbManager.setAnswered(qu);

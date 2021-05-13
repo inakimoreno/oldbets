@@ -195,6 +195,7 @@ public class MainGUI extends JFrame {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				BrowseQuestionsGUI findQuestionsWindow = new BrowseQuestionsGUI(businessLogic, mainGui);
+				findQuestionsWindow.setBusinessLogic(businessLogic);
 				mainGui.setEnabled(false);
 				findQuestionsWindow.setVisible(true);
 			}
