@@ -84,23 +84,23 @@ public class MoneyGUI extends JFrame {
 		JButton doneButton = new JButton("Accept");
 		doneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(Integer.parseInt(depositAmount.getText())>0) {
+				if(Float.parseFloat(depositAmount.getText())>0) {
 					if(depositRadioButton.isSelected()) {
 						System.out.println("depositing");
-						if(businessLogic.getCreditCard(currentUser.getCreditCard().getNumber()).getBalance()-Integer.parseInt(depositAmount.getText())>=0) {
+						if(businessLogic.getCreditCard(currentUser.getCreditCard().getNumber()).getBalance()-Float.parseFloat(depositAmount.getText())>=0) {
 							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("moneyDepositedWallet"));
-							businessLogic.substractMoneyCreditCard(currentUser.getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
-							businessLogic.addBalance(Integer.parseInt(depositAmount.getText()),currentUser);
+							businessLogic.substractMoneyCreditCard(currentUser.getCreditCard().getNumber(),Float.parseFloat(depositAmount.getText()));
+							businessLogic.addBalance(Float.parseFloat(depositAmount.getText()),currentUser);
 						}else {
 							//error not enough money in bank
 							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("notEnoughFundsBank"));
 						}
 					}else if(withdrawRadioButton.isSelected()) {
 						System.out.println("withdrawing");
-						if(businessLogic.getBalance(currentUser)-Integer.parseInt(depositAmount.getText())>=0) {
+						if(businessLogic.getBalance(currentUser)-Float.parseFloat(depositAmount.getText())>=0) {
 							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("moneyDepositedBank"));
-							businessLogic.substractBalance(Integer.parseInt(depositAmount.getText()),currentUser);
-							businessLogic.addMoneyCreditCard(currentUser.getCreditCard().getNumber(),Integer.parseInt(depositAmount.getText()));
+							businessLogic.substractBalance(Float.parseFloat(depositAmount.getText()),currentUser);
+							businessLogic.addMoneyCreditCard(currentUser.getCreditCard().getNumber(),Float.parseFloat(depositAmount.getText()));
 						}else {
 							//error not enough money in balance
 							alertTextPane.setText(ResourceBundle.getBundle("Etiquetas").getString("notEnoughFundsWallet"));
@@ -116,6 +116,15 @@ public class MoneyGUI extends JFrame {
 		alertTextPane = new JTextPane();
 		alertTextPane.setBackground(SystemColor.menu);
 		
+		JButton allButton = new JButton("All");
+		allButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(withdrawRadioButton.isSelected())
+					depositAmount.setText(Float.toString(businessLogic.getBalance(currentUser)));
+			
+			}
+		});
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -126,47 +135,58 @@ public class MoneyGUI extends JFrame {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(depositRadioButton)
 								.addComponent(balanceLabel))
-							.addPreferredGap(ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(balance)
-								.addComponent(withdrawRadioButton))
-							.addGap(39)
-							.addComponent(depositAmount, 92, 92, 92))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+									.addComponent(balance)
+									.addGap(91))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(18)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+										.addComponent(allButton)
+										.addComponent(withdrawRadioButton))
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(depositAmount, 92, 92, 92))))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(62)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(alertTextPane, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-								.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(alertTextPane, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 									.addComponent(cancelButton)
-									.addPreferredGap(ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-									.addComponent(doneButton)
-									.addGap(56)))))
-					.addGap(84))
+									.addGap(18)
+									.addComponent(doneButton)))
+							.addGap(95)))
+					.addGap(75))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(170)
 					.addComponent(title)
-					.addContainerGap(180, Short.MAX_VALUE))
+					.addContainerGap(170, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(title)
-					.addGap(32)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(balance)
-						.addComponent(balanceLabel))
-					.addGap(26)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(depositAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(depositRadioButton)
-						.addComponent(withdrawRadioButton))
-					.addGap(21)
-					.addComponent(alertTextPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(cancelButton)
-						.addComponent(doneButton))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(title)
+							.addGap(32)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(balance)
+								.addComponent(balanceLabel))
+							.addGap(26)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(depositRadioButton)
+								.addComponent(withdrawRadioButton)
+								.addComponent(depositAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(21)
+							.addComponent(alertTextPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(doneButton)
+								.addComponent(cancelButton)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(131)
+							.addComponent(allButton)))
 					.addContainerGap(42, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
